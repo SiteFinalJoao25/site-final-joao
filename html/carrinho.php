@@ -18,12 +18,12 @@ require '../php/conexao.php';
 
 <body>
     <?php 
-    // Inclui o cabeçalho do site e verifica se o usuário está logado.
-    // Caso contrário, redireciona para a página de "não logado".
-    include 'header.php';
-    if(!isset($_SESSION['login']) && !isset($_SESSION['senha'])) {
-        header('Location: naologado.php');
-    }
+        // Inclui o cabeçalho do site e verifica se o usuário está logado.
+        // Caso contrário, redireciona para a página de "não logado".
+        include 'header.php';
+        if(!isset($_SESSION['login']) && !isset($_SESSION['senha'])) {
+            header('Location: naologado.php');
+        }
     ?>
     <main>
         <div class="cart-table-container">
@@ -48,7 +48,7 @@ require '../php/conexao.php';
                     $userId = $arrayId["USER_ID"];
 
                     // Seleciona os itens do carrinho associados ao usuário, agrupando por produto
-                    $sql = "SELECT 
+                    $sql = "SELECT  
                                 PROD_CART_ID, 
                                 FK_ID_PROD, 
                                 ID_PROD, 
