@@ -129,7 +129,7 @@ require '../php/conexao.php';
             <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
                 <!-- Seleção da forma de pagamento -->
                 <select name="formaPag" id="formaPag">
-                    <option value="PIX">PIXx</option>
+                    <option value="PIX">PIX</option>
                     <option value="Cartão de Crédito">Cartão de crédito</option>
                     <option value="boleto">Boleto</option>
                 </select>
