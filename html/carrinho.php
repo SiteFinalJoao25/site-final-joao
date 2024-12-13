@@ -38,60 +38,27 @@ require '../php/conexao.php';
                 </thead>
                 <tbody>
                     <?php
-                    // Recupera as credenciais do usuário na sessão
-                    $email = $_SESSION["login"];
-                    $senha = $_SESSION["senha"];
-                    // Consulta para obter o ID do usuário logado
-                    $sql = "SELECT * FROM USER WHERE EMAIL = '$email' AND SENHA = '$senha'";
-                    $query = mysqli_query($conexao, $sql);
-                    $arrayId = mysqli_fetch_array($query);
-                    $userId = $arrayId["USER_ID"];
-
-                    // Seleciona os itens do carrinho associados ao usuário, agrupando por produto
-                    $sql = "SELECT  
-                                PROD_CART_ID, 
-                                FK_ID_PROD, 
-                                ID_PROD, 
-                                PROD_NAME, 
-                                SUM(CARRINHO.VALOR) AS TOTAL, 
-                                CARRINHO.VALOR AS PRECO, 
-                                SUM(QUANT) AS QUANT, 
-                                QUANT AS QUANTIDADE 
-                            FROM CARRINHO, PRODUTO 
-                            WHERE ID_PROD = FK_ID_PROD AND CARR_USER_ID = $userId 
-                            GROUP BY FK_ID_PROD";
-                    $itens = mysqli_query($conexao, $sql);
-                    if(mysqli_num_rows($itens) > 0) {
-                        // Itera sobre os itens retornados e exibe cada um como uma linha na tabela
-                        foreach($itens as $item) {
+                        // Recupera as credenciais do usuário na sessão
+                        $email = $_SESSION["login"];
+                        $senha = $_SESSION["senha"];
+                        // Consulta para obter o ID do usuário logado
+                        $sql = "SELECT * FROM USER WHERE EMAIL = '$email' AND SENHA = '$senha'";
+                        $query = mysqli_query($conexao, $sql);
+                        $arrayId = mysqli_fetch_array($query);
+                        $userId = $arrayId["USER_ID"];
+                        echo $userId;
                     ?>
                     <tr>
-                        <td><?php echo  $item['PROD_NAME'] ?></td>
+                        <td>nome aqui</td>
                         <td>
-                            <?php 
-                            // ID do item atual para referência em formulários
-                            $iditem = $item['PROD_CART_ID'];
-                            ?>
                             <form action="<?php echo  $_SERVER['PHP_SELF'] ?>" method="POST">
                                 <!-- Campo para alterar a quantidade do produto -->
-                                <input type="number" name="produto_<?php echo $iditem?>" title="produto_<?php echo $item['PROD_CART_ID']?>" style="width: 40px;" value="<?php echo $item['QUANTIDADE'] ?>" min="1">
+                                <input type="number" name="produto_<?php echo $iditem?>" title="produto_idAqui" style="width: 40px;" value="" min="1">
                                 <input type="submit" value="Atualizar" name="updateQuant">
                             </form>
-                            <?php 
-                            // Atualiza a quantidade do item no banco de dados quando o formulário é submetido
-                            if(isset($_POST['updateQuant'])) {
-                                if(isset($_POST["produto_$iditem"])) {
-                                    $newQuant = $_POST["produto_$iditem"];
-                                    $sql = "UPDATE CARRINHO SET QUANT = $newQuant WHERE PROD_CART_ID = $iditem";
-                                    mysqli_query($conexao, $sql);
-                                    // Atualiza a página para refletir as mudanças
-                                    echo "<script>window.location.href='carrinho.php';</script>";
-                                }
-                            }
-                            ?>
                         </td>
                         <!-- Exibe o valor total para a quantidade do produto -->
-                        <td>R$<?php echo $item['PRECO']*$item['QUANTIDADE']?></td>
+                        <td>R$preçoaqui</td>
                         <td>
                             <form action="../php/acoes.php" method="GET">
                                 <!-- Botão para excluir o item do carrinho -->
@@ -99,13 +66,6 @@ require '../php/conexao.php';
                             </form>
                         </td>
                     </tr>
-                    <?php 
-                        }
-                    } else {
-                        // Exibe uma mensagem caso o carrinho esteja vazio
-                        echo "<h3 style='text-align: center;'>Seu carrinho está vazio!</h3>";
-                    }
-                    ?>
                 </tbody>
             </table>
             <div class="total">
