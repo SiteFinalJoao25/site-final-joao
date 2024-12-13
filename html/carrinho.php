@@ -46,26 +46,46 @@ require '../php/conexao.php';
                         $query = mysqli_query($conexao, $sql);
                         $arrayId = mysqli_fetch_array($query);
                         $userId = $arrayId["USER_ID"];
-                        echo $userId;
                     ?>
-                    <tr>
-                        <td>nome aqui</td>
-                        <td>
-                            <form action="<?php echo  $_SERVER['PHP_SELF'] ?>" method="POST">
-                                <!-- Campo para alterar a quantidade do produto -->
-                                <input type="number" name="produto_<?php echo $iditem?>" title="produto_idAqui" style="width: 40px;" value="" min="1">
-                                <input type="submit" value="Atualizar" name="updateQuant">
-                            </form>
-                        </td>
-                        <!-- Exibe o valor total para a quantidade do produto -->
-                        <td>R$preçoaqui</td>
-                        <td>
-                            <form action="../php/acoes.php" method="GET">
-                                <!-- Botão para excluir o item do carrinho -->
-                                <button type="submit" name="delete_cart_item" value="<?php echo $item['PROD_CART_ID'] ?>">Excluir</button>
-                            </form>
-                        </td>
-                    </tr>
+                    <?php 
+                        //SELECIONA OS PRODUTOS DO CARRINHO DESSE USUÁRIO E VERIFICA SE ESTÁ VAZIO
+                        $sql = "SELECT * FROM CARRINHO WHERE CARR_USER_ID = $userId";
+                        $query = mysqli_query($conexao, $sql);
+                        
+                        if(mysqli_num_rows($query) == 0){
+                            echo "<h3>Seu carrinho está vazio!</h3>";
+                        } else {
+                            $sql = "SELECT * FROM PRODUTO, CARRINHO WHERE ID_PROD = FK_ID_PROD AND CARR_USER_ID = $userId";
+                            $itens = mysqli_query($conexao, $sql);
+                            echo "<pre>";
+                            $vizu = mysqli_fetch_assoc($itens);
+                            print_r($vizu);
+                            echo "</pre>";
+                            while ($item = mysqli_fetch_assoc($itens)) {
+                    ?>
+                        <tr>
+                            <td>nomeaqui</td>
+                            <td>
+                                <form action="<?php echo  $_SERVER['PHP_SELF'] ?>" method="POST">
+                                    <!-- Campo para alterar a quantidade do produto -->
+                                    <input type="number" name="produto_idAqui" title="produto_idAqui" style="width: 40px;" value="" min="1">
+                                    <input type="submit" value="Atualizar" name="updateQuant">
+                                </form>
+                            </td>
+                            <!-- Exibe o valor total para a quantidade do produto -->
+                            <td>R$preçoaqui</td>
+                            <td>
+                                <form action="../php/acoes.php" method="GET">
+                                    <!-- Botão para excluir o item do carrinho -->
+                                    <button type="submit" name="delete_cart_item" value="iddoproduto">Excluir</button>
+                                </form>
+                            </td>
+                        </tr>
+                    <?php 
+                            }
+                        }
+                    ?>
+
                 </tbody>
             </table>
             <div class="total">
