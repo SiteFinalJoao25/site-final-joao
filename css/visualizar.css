@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body{
+    background-color: #854f6c;
+    padding-top: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+main {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-end;
+}
+
+.container-visualizar {
+    background-color: #dbd6d9;
+    margin: auto;
+    padding: 40px;
+    display: flex;
+    gap: 15px;
+    border-radius: 15px;
+}
+
+.img-visualizar {
+    width: 300px;
+    border-radius: 5px;
+}
+
+.textos-visualizar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.textos-top {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.nome-produto {
+    font-size: 22px;
+    width: 350px;
+}
+.descricao-produto {
+    font-size: 16px;
+    width: 300px;
+}
+
+.valor-produto {
+    font-size: 20px;
+    font-weight: 800;
+    font-style: italic;
+}
+
+.botao-adicionar {
+    border: none;
+    padding: 10px;
+    font-size: 18px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 900;
+    border-radius: 3px;
+    background-color: #854f6c58;
+    color: #36202c;
+}
+
+.botao-adicionar:hover {
+    background-color: #854f6cb3;
+}
+
+.quantidade {
+    width: 40px;
+    font-size: 16px;
+    background-color: #7f607079;
+    border: none;
+    border-radius: 3px;
+}
+
+.voltar {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    background-color: #000000;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+
+

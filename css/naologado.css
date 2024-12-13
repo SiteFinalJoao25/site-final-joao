@@ -1,0 +1,52 @@
+/* Geral */
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #81537d; /* Fundo roxo */
+}
+
+.container {
+    text-align: center;
+    background-color: #f3dfe8; /* Fundo rosa claro */
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Título */
+h1 {
+    color: #000; /* Texto preto */
+    margin-bottom: 15px;
+    font-size: 1.8rem;
+}
+
+/* Parágrafo */
+p {
+    color: #333; /* Texto levemente escuro */
+    margin-bottom: 20px;
+    font-size: 1rem;
+}
+
+/* Botão */
+.btn {
+    display: inline-block;
+    background-color: #81537d; /* Fundo roxo */
+    color: #fff; /* Texto branco */
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #6a4263; /* Fundo mais escuro ao passar o mouse */
+}

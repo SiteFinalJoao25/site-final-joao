@@ -1,0 +1,215 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Inter", sans-serif;
+}
+
+body {
+background-color: #854f6c;
+}
+
+.cabecalho{
+    background-color: #fbe4d891;
+    backdrop-filter: blur(20px);
+    display: flex;
+    box-shadow: 3px 3px 10px #00000048;
+    align-items: center;
+    padding: 15px;
+    align-items: flex-end;
+    justify-content: space-between;
+    width: 100%;
+    top: 0%;
+    position: fixed;
+    z-index: 999;
+}
+
+.header_left{
+    display: flex;
+    align-items: flex-end;
+    gap: 15px;
+}
+
+.logout-button {
+    background: transparent;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header-right{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.header_right .login{
+    text-decoration: none;
+    color: #190019;
+    font-weight: bold;
+    
+}
+
+.cabecalho .logo{
+    height: 50px;
+}
+
+.navbar{
+    display: flex;
+    gap: 10px;
+}
+
+.navbar .navbar_link{
+    text-decoration: none;
+    color: #190019;
+    font-weight: bold;
+}
+
+
+main {
+    padding: 10px;
+    width: 80%;
+    margin: auto;
+    margin-top: 50px;
+    position: relative;
+    top: 80px;
+}
+
+.container_cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px;
+    margin: auto;
+}
+
+.card {
+    background-color: #fbe4d8;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: 10px;
+    padding: 20px;
+    width: 270px;
+    box-shadow: 3px 3px 10px #00000027;
+}
+
+.card .titulo_card{
+    font-size: 50px;
+    font-weight: bold;   
+}
+
+#titulo_card_2 {
+    font-size: 35px;
+}
+
+.card .porcentagem{
+    font-size: 40px;
+    color: #854f6c;
+}
+
+.card .off{
+    font-size: 35px;
+    font-style: italic;
+    font-weight: normal;
+    color: #854f6c;
+}
+
+
+.card .desconto{
+    font-size: 70px;
+    font-weight: bold;
+    color: #854f6c;
+}
+
+.card .tempo_limitado{
+    font-size: 17px;
+    font-weight: 300;
+}
+
+.card .botao_compra{
+    font-size: 25px;
+    font-weight: 900;
+    text-decoration: none;
+    color: #fbe4d8;
+    background: #190019;
+    padding: 10px 15px;
+    border-radius: 25px;
+
+}
+
+section.colecao {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin-top: 40px;
+}
+
+.img-relogio {
+    width: 50%;
+    height: 476px;
+    background-image: url(../imagens/relogio.png);
+    background-position: center center;
+    background-size: cover;
+    margin-bottom: 20px;
+}
+
+.conteiner_textos {
+    width: 46%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+.titulo_colecao {
+    color: #FFF;
+
+    text-align: center;
+    font-family: Inter;
+    font-size: 50px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.texto-colecao {
+    width: 626px;
+    color: #FFF;
+    
+    text-align: center;
+    font-family: Inter;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 200;
+    line-height: normal;
+}
+
+.botao_colecao {
+    display: flex;
+    padding: 12px 15px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 30px;
+    background: #190019;
+    flex-shrink: 0;
+    color: #FBE4D8;
+    text-align: center;
+    font-family: Inter;
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    text-decoration: none;
+}
+
+

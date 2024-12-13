@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Inter", sans-serif;
+}
+
+.cabecalho{
+    background-color: #fbe4d891;
+    backdrop-filter: blur(20px);
+    display: flex;
+    box-shadow: 3px 3px 10px #00000048;
+    align-items: center;
+    padding: 15px;
+    align-items: flex-end;
+    justify-content: space-between;
+    width: 100%;
+    top: 0%;
+    position: fixed;
+    z-index: 999;
+}
+
+.header_left{
+    display: flex;
+    align-items: flex-end;
+    gap: 15px;
+}
+
+.logout-button {
+    background: transparent;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.header-right{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.header_right .login{
+    text-decoration: none;
+    color: #190019;
+    font-weight: bold;
+    
+}
+
+.cabecalho .logo{
+    height: 50px;
+}
+
+.navbar{
+    display: flex;
+    gap: 10px;
+}
+
+.navbar .navbar_link{
+    text-decoration: none;
+    color: #190019;
+    font-weight: bold;
+}
