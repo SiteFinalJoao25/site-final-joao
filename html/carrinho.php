@@ -65,10 +65,10 @@ require '../php/conexao.php';
                     <tr>
                         <td><?php echo $prodName?></td>
                         <td>
-                            <form action="<?php echo  $_SERVER['PHP_SELF'] ?>" method="POST">
+                            <form action="<?php echo  $_SERVER['PHP_SELF'] ?>" method="POST" class="formquant">
                                 <!-- Campo para alterar a quantidade do produto -->
-                                <input type="number" name="produto_<?php echo $prodId ?>" title="produto_<?php echo $prodId ?>" style="width: 40px;" value="<?php echo $prodQuant ?>" min="1">
-                                <input type="submit" value="Atualizar" name="updateQuant">
+                                <input type="number" name="produto_<?php echo $prodId ?>" title="produto_<?php echo $prodId ?>" style="width: 40px;" value="<?php echo $prodQuant ?>" min="1" class="inputQuant">
+                                <button type="submit" name="updateQuant" class="updateQuant"><img src="../imagens/updateQuant.svg" alt="" width="20px"></button>
                             </form>
                         </td>
                         <!-- Exibe o valor total para a quantidade do produto -->
