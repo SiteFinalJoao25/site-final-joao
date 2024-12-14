@@ -56,7 +56,7 @@
                 mysqli_query($conexao,$sql);
                 header('Location: ../html/carrinho.php');
             } else {
-                $sql = "INSERT INTO CARRINHO (CARR_USER_ID, QUANT, FK_ID_PROD, VALOR) VALUES ($userId, $quant, $produto_id, $valor)";
+                $sql = "INSERT INTO CARRINHO (CARR_USER_ID, QUANT, FK_ID_PROD, VALOR, COMPRADO) VALUES ($userId, $quant, $produto_id, $valor, '0')";
                 mysqli_query($conexao, $sql);
         
                 if(mysqli_affected_rows($conexao) > 0) {
@@ -174,6 +174,96 @@
         }
         
 
+    }
+
+    if(isset($_POST['finalizar-compra'])) {
+        //pegando o id do usuário
+        $email = $_SESSION["login"];
+        $senha = $_SESSION["senha"];
+        // Consulta para obter o ID do usuário logado
+        $sql = "SELECT * FROM USER WHERE EMAIL = '$email' AND SENHA = '$senha'";
+        $query = mysqli_query($conexao, $sql);
+        $arrayId = mysqli_fetch_array($query);
+        $userId = $arrayId["USER_ID"];
+
+        // Verifica se tem algum item dentro do carrinho
+        $sql = "SELECT * FROM CARRINHO WHERE CARR_USER_ID = $userId";
+        $query = mysqli_query($conexao, $sql);
+        if(mysqli_num_rows($query) > 0) {
+            $sql = "SELECT NUM_COMPRAS FROM USER WHERE USER_ID = $userId";
+            $query = mysqli_query($conexao, $sql);
+            $arrayNumCompras = mysqli_fetch_array($query);
+            $numCompras = $arrayNumCompras['NUM_COMPRAS'] + 1;
+
+            // Atualiza o número total de compras realizadas pelo usuário
+            $sql = "UPDATE USER SET NUM_COMPRAS = $numCompras WHERE USER_ID = $userId";
+            mysqli_query($conexao, $sql);
+
+            //PEGA O TOTAL DO CARRINHO PARA REGISTRAR
+            $sql = "SELECT SUM(VALOR*QUANT) TOTAL FROM CARRINHO WHERE CARR_USER_ID = $userId";
+            $query = mysqli_query($conexao, $sql);
+            $arrayTotal = mysqli_fetch_array($query);
+            $totalCompra = $arrayTotal['TOTAL'];
+
+            //PEGANDO A FORMA DE PAGAMENTO
+            $formaPag = $_POST['formaPag'];
+
+            //INSERE OS DADOS NA TABELA DE COMPRAS
+            $sql = "INSERT INTO COMPRA (TOTAL_COMPRA, FK_NUM_COMPRA, FK_CARR_USER_ID, FORMA_PAGAMENTO) VALUES ($totalCompra, $numCompras, $userId, '$formaPag')";
+            mysqli_query($conexao, $sql);
+
+            // Seleciona os itens do carrinho para inserir na tabela de itens da compra
+            $sql = "SELECT * FROM CARRINHO WHERE CARR_USER_ID = $userId AND COMPRADO = '0'";
+            $itens = mysqli_query($conexao, $sql);
+            while ($item = mysqli_fetch_assoc($itens)) {
+
+                $idPosCart = $item['PROD_CART_ID'];
+                //userId
+                $quant = $item['QUANT'];
+                $idProduto = $item['FK_ID_PROD'];
+                $valor = $item['VALOR'];
+                $comprado = $item['COMPRADO'];
+
+                // echo "<br>";
+                // echo $idPosCart;
+                // echo "<br>";
+                // echo $userId;
+                // echo "<br>";
+                // echo $quant;
+                // echo "<br>";
+                // echo $idProduto;
+                // echo "<br>";
+                // echo $valor;
+                // echo "<br>";
+                // echo $comprado;
+                // echo "<br>";
+
+                //ALTERA O STATUS "COMPRADO" DO ITEM DO CARRINHO PARA 1, PARA QUE ELE NÃO APAREÇA NO CARRINHO
+                $sql = "UPDATE CARRINHO SET COMPRADO = '1' WHERE PROD_CART_ID = $idPosCart";
+                mysqli_query($conexao, $sql);
+
+                //PUXA O ID DA COMPRA
+                $sql = "SELECT ID_COMPRA FROM COMPRA WHERE FK_NUM_COMPRA = $numCompras AND FK_CARR_USER_ID = $userId";
+                $query = mysqli_query($conexao, $sql);
+                $arrayIdCompra = mysqli_fetch_assoc($query);
+                $idCompra = $arrayIdCompra['ID_COMPRA'];
+
+                //REGISTRA OS ITENS NA TEBELA ITENS_COMPRA
+                $sql = "INSERT INTO ITENS_COMPRA (ID_PRODUTO, FK_QUANT, FK_NUM_COMPRA, FK_PROD_CART_ID, FK_ID_COMPRA) VALUES ($idProduto, $quant, $numCompras, $idPosCart, $idCompra)";
+                mysqli_query($conexao, $sql);
+
+                //MANDA PARA A PÁGINA DE NOTA FISCAL SE A OPERAÇÃO FOR BEM SUCEDIDA
+                if(mysqli_affected_rows($conexao) > 0) {
+                    header('Location: ../html/notafiscal.php');
+                } else {
+                    echo "Algo deu errado: " . mysqli_error($conexao);
+                }
+
+
+
+            }
+
+        }
     }
 
     

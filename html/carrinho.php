@@ -49,11 +49,11 @@ require '../php/conexao.php';
                     ?>
                     <?php 
                         //SELECIONA OS PRODUTOS DO CARRINHO DESSE USUÁRIO E VERIFICA SE ESTÁ VAZIO
-                        $sql = "SELECT * FROM CARRINHO WHERE CARR_USER_ID = $userId";
+                        $sql = "SELECT * FROM CARRINHO WHERE CARR_USER_ID = $userId AND COMPRADO = '0'";
                         $query = mysqli_query($conexao, $sql);
                         if(mysqli_num_rows($query) > 0){
                             //SELECIONANDO OS DADOS NECESSÁRIOS PARA MOSTRAR OS PRODUTOS
-                            $sql = "SELECT * FROM CARRINHO, PRODUTO WHERE FK_ID_PROD = ID_PROD AND CARR_USER_ID = $userId";
+                            $sql = "SELECT * FROM CARRINHO, PRODUTO WHERE FK_ID_PROD = ID_PROD AND CARR_USER_ID = $userId AND COMPRADO = '0'";
                             $itens = mysqli_query($conexao, $sql);
                             while ($item = mysqli_fetch_assoc($itens)) {
                                 $prodImage = $item['PROD_IMAGE'];
@@ -93,7 +93,7 @@ require '../php/conexao.php';
             <div class="total">
                 <?php
                 // Calcula o valor total dos itens no carrinho
-                $sql = "SELECT SUM(VALOR*QUANT) TOTAL FROM CARRINHO WHERE CARR_USER_ID = $userId";
+                $sql = "SELECT SUM(VALOR*QUANT) TOTAL FROM CARRINHO WHERE CARR_USER_ID = $userId AND COMPRADO = '0'";
                 $query = mysqli_query($conexao, $sql);
                 if (mysqli_num_rows($query) > 0) {
                     $arrayTotal = mysqli_fetch_array($query);
@@ -108,7 +108,7 @@ require '../php/conexao.php';
         <div class="botoes">
             <!-- Botão para voltar à página de produtos -->
             <a href="produtos.php" class="voltar">Voltar</a>
-            <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
+            <form action="../php/acoes.php" method="POST">
                 <!-- Seleção da forma de pagamento -->
                 <select name="formaPag" id="formaPag">
                     <option value="PIX">PIX</option>
@@ -116,7 +116,7 @@ require '../php/conexao.php';
                     <option value="boleto">Boleto</option>
                 </select>
                 <!-- Botão para finalizar a compra -->
-                <button type="submit" class="voltar" name="finalizar">Finalizar Compra</button>
+                <button type="submit" class="voltar" name="finalizar-compra">Finalizar Compra</button>
             </form>
             <?php
             // Finaliza a compra: atualiza o número de compras, insere os dados na tabela de compras e limpa o carrinho
