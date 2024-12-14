@@ -92,3 +92,35 @@ main {
     cursor: pointer;
 }
 
+.inputQuant {
+    background-color: transparent;
+    border: 2px solid #694156;
+    border-radius: 5px;
+    padding: 5px;
+    color: #e2e2e2;
+    outline: none;
+}
+
+button.updateQuant {
+    padding: 7px;
+    border-radius: 5px;
+    border: none;
+    background-color: #694156;
+    color: #e2e2e2;
+}
+
+button.updateQuant:hover {
+    background-color: #69415694;
+}
+
+#formapag {
+    background-color: #694156;
+    border: 1px solid #cccccc97;
+    border-radius: 10px;
+    padding: 12px;
+    color: #ffffff;
+}
+.formquant {
+    display: flex;
+    gap: 5px;
+}
