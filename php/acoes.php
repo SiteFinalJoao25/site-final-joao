@@ -46,13 +46,13 @@
             $userId = $arrayId["USER_ID"];
     
             //SE O PRODUTO JÁ TIVER SIDO ADICIONADO POR ESSE USUÁRIO, O CARRINHO SÓ AUMENTA A QUANTIDADE
-            $sql = "SELECT FK_ID_PROD, QUANT FROM CARRINHO WHERE FK_ID_PROD = $produto_id";
+            $sql = "SELECT QUANT FROM CARRINHO WHERE FK_ID_PROD = $produto_id";
             $query = mysqli_query($conexao, $sql);
             $arrayQuant = mysqli_fetch_array($query);
             if(mysqli_num_rows($query) > 0) {
                 $quantBD = $arrayQuant['QUANT'];
                 $newQuant = $quant + $quantBD;
-                $sql = "UPDATE CARRINHO SET QUANT = $newQuant WHERE FK_ID_PROD = $produto_id";
+                $sql = "UPDATE CARRINHO SET QUANT = $newQuant, COMPRADO = '0' WHERE FK_ID_PROD = $produto_id";
                 mysqli_query($conexao,$sql);
                 header('Location: ../html/carrinho.php');
             } else {
@@ -82,7 +82,7 @@
 
         $idPosCart = $_GET['delete_cart_item'];
 
-        $sql = "DELETE FROM CARRINHO WHERE PROD_CART_ID = $idPosCart";
+        $sql = "UPDATE CARRINHO SET QUANT = 0, COMPRADO = '1' WHERE PROD_CART_ID = $idPosCart";
         mysqli_query($conexao, $sql);
         
         if(mysqli_affected_rows($conexao) > 0) {
@@ -224,22 +224,8 @@
                 $valor = $item['VALOR'];
                 $comprado = $item['COMPRADO'];
 
-                // echo "<br>";
-                // echo $idPosCart;
-                // echo "<br>";
-                // echo $userId;
-                // echo "<br>";
-                // echo $quant;
-                // echo "<br>";
-                // echo $idProduto;
-                // echo "<br>";
-                // echo $valor;
-                // echo "<br>";
-                // echo $comprado;
-                // echo "<br>";
-
                 //ALTERA O STATUS "COMPRADO" DO ITEM DO CARRINHO PARA 1, PARA QUE ELE NÃO APAREÇA NO CARRINHO
-                $sql = "UPDATE CARRINHO SET COMPRADO = '1' WHERE PROD_CART_ID = $idPosCart";
+                $sql = "UPDATE CARRINHO SET COMPRADO = '1', QUANT = 0 WHERE PROD_CART_ID = $idPosCart";
                 mysqli_query($conexao, $sql);
 
                 //PUXA O ID DA COMPRA
