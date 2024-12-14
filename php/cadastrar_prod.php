@@ -1,12 +1,15 @@
-<?php 
-    require 'conexao.php';
-    session_start();
-    if(!isset($_SESSION['login']) && !isset($_SESSION['senha'])) {
-        header('Location: ../html/naologado.php');
-        if($_SESSION['login'] != "teste@teste.com" || $_SESSION['senha'] != "admin") {
-            header('Location: ../html/naologado.php');
-        }
+<?php
+require "conexao.php";
+session_start();
+if (!isset($_SESSION["login"]) && !isset($_SESSION["senha"])) {
+    header("Location: ../html/naologado.php");
+    if (
+        $_SESSION["login"] != "teste@teste.com" ||
+        $_SESSION["senha"] != "admin"
+    ) {
+        header("Location: ../html/naologado.php");
     }
+}
 ?>
 
 <!DOCTYPE html>

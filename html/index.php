@@ -10,9 +10,7 @@
 </head>
 
 <body>
-    <?php
-    include 'header.php';
-  ?>
+    <?php include "header.php"; ?>
     <main>
         <div class="container_cards">
             <div class="card">
