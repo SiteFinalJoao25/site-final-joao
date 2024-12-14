@@ -17,38 +17,43 @@
 <body>
     <main>
         <h1>Obrigado por comprar conosco!</h1>
+        <?php
+            //pegando o id do usuário
+            $email = $_SESSION["login"];
+            $senha = $_SESSION["senha"];
+            // Consulta para obter o ID do usuário logado
+            $sql = "SELECT * FROM USER WHERE EMAIL = '$email' AND SENHA = '$senha'";
+            $query = mysqli_query($conexao, $sql);
+            $arrayId = mysqli_fetch_array($query);
+            $userId = $arrayId["USER_ID"];
+        
+            $idCompra = $_GET['idCompra'];
+            //COMPRA.ID_COMPRA
+            //COMPRA.FORMA_PAGAMENTO
+            //COMPRA.TOTAL_COMPRA
+            //ITENS_COMPRA.COUNT(ID_ITEM_COMPRA) WHERE FK_ID_COMRPA = $idCompra
+
+
+            //SELECIONA A FORMA DE PAGAMENTO E O TOTAL DA COMPRA
+            $sql = "SELECT FORMA_PAGAMENTO, TOTAL_COMPRA FROM COMPRA WHERE ID_COMPRA = $idCompra";
+            $query = mysqli_query($conexao, $sql);
+            $arrayNF = mysqli_fetch_assoc($query);
+            $formaPag = $arrayNF['FORMA_PAGAMENTO'];
+            $totalCompra = $arrayNF['TOTAL_COMPRA'];
+
+            //SELECIONA A QUANTIDADE DE ITENS;
+            $sql = "SELECT SUM(FK_QUANT) AS QUANTITENS FROM ITENS_COMPRA WHERE FK_ID_COMPRA = $idCompra";
+            $query = mysqli_query($conexao, $sql);
+            $arrayQuant = mysqli_fetch_assoc($query);
+            $quanItens = $arrayQuant['QUANTITENS'];
+
+
+        ?>
         <div class="info">
-            <?php 
-                $email = $_SESSION["login"];
-                $senha = $_SESSION["senha"];
-                $sql = "SELECT * FROM USER WHERE EMAIL = '$email' AND SENHA = '$senha'";
-                $query = mysqli_query($conexao, $sql);
-                $arrayId = mysqli_fetch_array($query);
-                $userId = $arrayId["USER_ID"]; // ESTE É O ID DO USER
-
-                $numCompra = $_GET['id'];
-                //SELECIONANDO A QUANTIDADE DE ITENS
-                $sql = "SELECT SUM(QUANT) FROM ITENS_COMPRA WHERE NUM_COMPRA = $numCompra";
-                $query = mysqli_query($conexao, $sql);
-                if (mysqli_num_rows($query) > 0) {
-                    $arrayQuant = mysqli_fetch_array($query);
-                    $quant = $arrayQuant['SUM(QUANT)'];
-                }
-
-                //SELECIONANDO O TOTAL
-                $sql = "SELECT TOTAL_COMPRA, FORMA_PAGAMENTO FROM COMPRA WHERE NUM_COMPRA = $numCompra";
-                $query = mysqli_query($conexao, $sql);
-                if (mysqli_num_rows($query) > 0) {
-                    $arrayTot = mysqli_fetch_array($query);
-                    $total = $arrayTot['TOTAL_COMPRA'];
-                    $formaPag = $arrayTot['FORMA_PAGAMENTO'];
-                }
-                
-            ?>
-            <p><strong>ID da compra: </strong> <?php echo $numCompra ?></p>
+            <p><strong>ID da compra: </strong> <?php echo $idCompra; ?></p>
             <p><strong>Forma de pagamento: </strong><?php echo $formaPag ?></p>
-            <p><strong>Total: </strong>R$<?php echo $total ?></p>
-            <p><strong>Número de itens: </strong><?php echo $quant ?></p>
+            <p><strong>Total: </strong>R$<?php echo $totalCompra ?></p>
+            <p><strong>Número de itens: </strong><?php echo $quanItens ?></p>
         </div>
         <div class="botoes">
             <a href="index.php" class="voltar">Voltar para o início</a>

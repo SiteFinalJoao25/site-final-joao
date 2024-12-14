@@ -240,7 +240,7 @@
 
                 //MANDA PARA A PÁGINA DE NOTA FISCAL SE A OPERAÇÃO FOR BEM SUCEDIDA
                 if(mysqli_affected_rows($conexao) > 0) {
-                    header('Location: ../html/notafiscal.php');
+                    header("Location: ../html/notafiscal.php?idCompra=$idCompra");
                 } else {
                     echo "Algo deu errado: " . mysqli_error($conexao);
                 }
