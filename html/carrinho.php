@@ -118,67 +118,6 @@ require '../php/conexao.php';
                 <!-- Botão para finalizar a compra -->
                 <button type="submit" class="voltar" name="finalizar-compra">Finalizar Compra</button>
             </form>
-            <?php
-            // Finaliza a compra: atualiza o número de compras, insere os dados na tabela de compras e limpa o carrinho
-            if(isset($_POST['finalizar'])) {
-
-                // Verifica se tem algum item dentro do carrinho
-                $sql = "SELECT * FROM CARRINHO WHERE CARR_USER_ID = $userId";
-                $query = mysqli_query($conexao, $sql);
-                if(mysqli_num_rows($query) > 0) {
-                    $sql = "SELECT NUM_COMPRAS FROM USER WHERE USER_ID = $userId";
-                    $query = mysqli_query($conexao, $sql);
-                    $arrayNumCompras = mysqli_fetch_array($query);
-                    $numCompras = $arrayNumCompras['NUM_COMPRAS'] + 1;
-    
-                    // Atualiza o número total de compras realizadas pelo usuário
-                    $sql = "UPDATE USER SET NUM_COMPRAS = $numCompras WHERE USER_ID = $userId";
-                    mysqli_query($conexao, $sql);
-    
-                    // Recupera o total da compra para registro
-                    $sql = "SELECT SUM(VALOR*QUANT) AS TOTAL FROM CARRINHO WHERE CARR_USER_ID = $userId";
-                    $query = mysqli_query($conexao, $sql);
-                    $arrayTotal = mysqli_fetch_array($query);
-                    $totalCompra = $arrayTotal['TOTAL'];
-    
-                    $formaPag = $_POST['formaPag'];
-                    // Insere os dados da compra na tabela de compras
-                    $sql = "INSERT INTO COMPRA (TOTAL_COMPRA, FK_CARR_USER_ID, NUM_COMPRA, FORMA_PAGAMENTO) VALUES ($totalCompra, $userId, $numCompras, '$formaPag')";
-                    mysqli_query($conexao, $sql);
-    
-                    // Seleciona os itens do carrinho para inserir na tabela de itens da compra
-                    $sql = "SELECT FK_ID_PROD, VALOR AS PRECO, QUANT FROM CARRINHO WHERE CARR_USER_ID = $userId";
-                    $itens = mysqli_query($conexao, $sql);
-                    foreach($itens as $item) {
-                        $itemCompra = $item['FK_ID_PROD'];
-                        $valorprod = $item['PRECO'];
-                        $quantCompra = $item['QUANT'];
-    
-                        // Remove os itens do carrinho após a compra
-                        $sql = "DELETE FROM CARRINHO WHERE CARR_USER_ID = $userId";
-                        mysqli_query($conexao, $sql);
-    
-                        // Registra os itens na tabela de itens da compra
-                        $sql = "INSERT INTO ITENS_COMPRA (ID_PRODUTO, QUANT, FK_VALOR, NUM_COMPRA) VALUES ($itemCompra, $quantCompra, $valorprod, $numCompras)";
-                        mysqli_query($conexao, $sql);
-    
-                        // Redireciona para a página de nota fiscal se a operação for bem-sucedida
-                        if (mysqli_affected_rows($conexao) > 0) {
-                            echo "<script>window.location.href='notafiscal.php?id=$numCompras';</script>";  
-                        } else {
-                            // Exibe erros do banco de dados, se existirem
-                            echo mysqli_error($conexao);
-                        }
-                    }
-                    // Limpa o estado do formulário para evitar reenvio
-                    unset($_POST['finalizar']);
-                } else {
-                    echo "<p><a href='produtos.php'>Adicione </a>algum item no carrinho antes de comprar.</p>";
-                }
-
-
-            }
-            ?>
         </div>
     </main>
 </body>
