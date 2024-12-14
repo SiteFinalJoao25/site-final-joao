@@ -51,38 +51,39 @@ require '../php/conexao.php';
                         //SELECIONA OS PRODUTOS DO CARRINHO DESSE USUÁRIO E VERIFICA SE ESTÁ VAZIO
                         $sql = "SELECT * FROM CARRINHO WHERE CARR_USER_ID = $userId";
                         $query = mysqli_query($conexao, $sql);
-                        
-                        if(mysqli_num_rows($query) == 0){
-                            echo "<h3>Seu carrinho está vazio!</h3>";
-                        } else {
-                            $sql = "SELECT * FROM PRODUTO, CARRINHO WHERE ID_PROD = FK_ID_PROD AND CARR_USER_ID = $userId";
+                        if(mysqli_num_rows($query) > 0){
+                            //SELECIONANDO OS DADOS NECESSÁRIOS PARA MOSTRAR OS PRODUTOS
+                            $sql = "SELECT * FROM CARRINHO, PRODUTO WHERE FK_ID_PROD = ID_PROD AND CARR_USER_ID = $userId";
                             $itens = mysqli_query($conexao, $sql);
-                            echo "<pre>";
-                            $vizu = mysqli_fetch_assoc($itens);
-                            print_r($vizu);
-                            echo "</pre>";
                             while ($item = mysqli_fetch_assoc($itens)) {
+                                $prodImage = $item['PROD_IMAGE'];
+                                $prodName = $item['PROD_NAME'];
+                                $prodQuant = $item['QUANT'];
+                                $prodValor = $item['VALOR'];
+                                $prodId = $item['FK_ID_PROD'];
                     ?>
-                        <tr>
-                            <td>nomeaqui</td>
-                            <td>
-                                <form action="<?php echo  $_SERVER['PHP_SELF'] ?>" method="POST">
-                                    <!-- Campo para alterar a quantidade do produto -->
-                                    <input type="number" name="produto_idAqui" title="produto_idAqui" style="width: 40px;" value="" min="1">
-                                    <input type="submit" value="Atualizar" name="updateQuant">
-                                </form>
-                            </td>
-                            <!-- Exibe o valor total para a quantidade do produto -->
-                            <td>R$preçoaqui</td>
-                            <td>
-                                <form action="../php/acoes.php" method="GET">
-                                    <!-- Botão para excluir o item do carrinho -->
-                                    <button type="submit" name="delete_cart_item" value="iddoproduto">Excluir</button>
-                                </form>
-                            </td>
-                        </tr>
+                    <tr>
+                        <td><?php echo $prodName?></td>
+                        <td>
+                            <form action="<?php echo  $_SERVER['PHP_SELF'] ?>" method="POST">
+                                <!-- Campo para alterar a quantidade do produto -->
+                                <input type="number" name="produto_<?php echo $prodId ?>" title="produto_<?php echo $prodId ?>" style="width: 40px;" value="<?php echo $prodQuant ?>" min="1">
+                                <input type="submit" value="Atualizar" name="updateQuant">
+                            </form>
+                        </td>
+                        <!-- Exibe o valor total para a quantidade do produto -->
+                        <td>R$<?php echo number_format($prodValor*$prodQuant, 2, ",", ".") ?></td>
+                        <td>
+                            <form action="../php/acoes.php" method="GET">
+                                <!-- Botão para excluir o item do carrinho -->
+                                <button type="submit" name="delete_cart_item" value="<?php echo $prodId ?>">Excluir</button>
+                            </form>
+                        </td>
+                    </tr>
                     <?php 
                             }
+                        } else {
+                            echo "<h3>Seu carrinho está vazio!</h3>";
                         }
                     ?>
 
@@ -95,7 +96,7 @@ require '../php/conexao.php';
                 $query = mysqli_query($conexao, $sql);
                 if (mysqli_num_rows($query) > 0) {
                     $arrayTotal = mysqli_fetch_array($query);
-                    $total = $arrayTotal['TOTAL'];
+                    $total = number_format($arrayTotal['TOTAL'], 2, ",", ".");
                 }
                 ?>
                 <!-- Exibe o valor total calculado -->
