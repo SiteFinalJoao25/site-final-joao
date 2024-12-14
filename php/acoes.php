@@ -46,7 +46,7 @@
             $userId = $arrayId["USER_ID"];
     
             //SE O PRODUTO JÁ TIVER SIDO ADICIONADO POR ESSE USUÁRIO, O CARRINHO SÓ AUMENTA A QUANTIDADE
-            $sql = "SELECT QUANT FROM CARRINHO WHERE FK_ID_PROD = $produto_id";
+            $sql = "SELECT QUANT FROM CARRINHO WHERE FK_ID_PROD = $produto_id AND CARR_USER_ID = $userId";
             $query = mysqli_query($conexao, $sql);
             $arrayQuant = mysqli_fetch_array($query);
             if(mysqli_num_rows($query) > 0) {
