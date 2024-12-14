@@ -80,15 +80,12 @@
       if(isset($_GET['delete_cart_item'])) {
         
 
-        $item_id = $_GET['delete_cart_item'];
-        echo $_GET['delete_cart_item'];
+        $idPosCart = $_GET['delete_cart_item'];
 
-
-        $sql = "DELETE FROM CARRINHO WHERE PROD_CART_ID = $item_id";
+        $sql = "DELETE FROM CARRINHO WHERE PROD_CART_ID = $idPosCart";
         mysqli_query($conexao, $sql);
         
         if(mysqli_affected_rows($conexao) > 0) {
-            echo "item deletado com sucesso.";
             header('Location: ../html/carrinho.php');
         } else {
             echo "item não foi deletado.";
@@ -138,6 +135,22 @@
         }
         
 
+    }
+
+    if(isset($_POST['updateQuant'])) {
+        //PEGANDO O ID DO ITEM
+        $idPosCart = $_GET['idPosCart'];
+        if(isset($_POST["produto_$idPosCart"])) {
+            $newQuant = $_POST["produto_$idPosCart"];
+            echo $newQuant;
+            $sql = "UPDATE CARRINHO SET QUANT = $newQuant WHERE PROD_CART_ID = $idPosCart";
+            mysqli_query($conexao, $sql);
+            if(mysqli_affected_rows($conexao) > 0) {
+                header('Location: ../html/carrinho.php');
+            } else {
+                echo "erro ao atualizar";
+            }
+        }
     }
 
     if(isset($_POST["deletar_produto"])) {

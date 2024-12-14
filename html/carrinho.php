@@ -61,13 +61,14 @@ require '../php/conexao.php';
                                 $prodQuant = $item['QUANT'];
                                 $prodValor = $item['VALOR'];
                                 $prodId = $item['FK_ID_PROD'];
+                                $idPosCart = $item['PROD_CART_ID'];
                     ?>
                     <tr>
                         <td><?php echo $prodName?></td>
                         <td>
-                            <form action="<?php echo  $_SERVER['PHP_SELF'] ?>" method="POST" class="formquant">
+                            <form action="../php/acoes.php?idPosCart=<?php echo $idPosCart?>" method="POST" class="formquant">
                                 <!-- Campo para alterar a quantidade do produto -->
-                                <input type="number" name="produto_<?php echo $prodId ?>" title="produto_<?php echo $prodId ?>" style="width: 40px;" value="<?php echo $prodQuant ?>" min="1" class="inputQuant">
+                                <input type="number" name="produto_<?php echo $idPosCart ?>" title="produto_<?php echo $prodId ?>" style="width: 40px;" value="<?php echo $prodQuant ?>" min="1" class="inputQuant">
                                 <button type="submit" name="updateQuant" class="updateQuant"><img src="../imagens/updateQuant.svg" alt="" width="20px"></button>
                             </form>
                         </td>
@@ -76,7 +77,7 @@ require '../php/conexao.php';
                         <td>
                             <form action="../php/acoes.php" method="GET">
                                 <!-- Botão para excluir o item do carrinho -->
-                                <button type="submit" name="delete_cart_item" value="<?php echo $prodId ?>">Excluir</button>
+                                <button type="submit" name="delete_cart_item" value="<?php echo $idPosCart?>">Excluir</button>
                             </form>
                         </td>
                     </tr>
