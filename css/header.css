@@ -64,3 +64,22 @@
     color: #190019;
     font-weight: bold;
 }
+
+.barra-pesquisa form{
+    display: flex;
+    gap: 5px;
+}
+
+.input-pesquisa {
+    width: 400px;
+    border: none;
+    border-radius: 5px;
+    background-color: #69415689;
+    padding: 0 10px;
+}
+
+.button-pesquisa {
+    border-radius: 5px;
+    border: none;
+    background-color: #69415689;
+}

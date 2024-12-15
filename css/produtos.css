@@ -20,7 +20,7 @@ main {
 .container-produtos {
     padding: 30px;
     display: flex;
-    width: fit-content;
+    width: 100%;
     justify-content: flex-start;
     margin: auto;
     flex-wrap: wrap;
@@ -33,8 +33,8 @@ main {
     justify-content: space-between;
     background-color: #dfb6b270;
     padding: 12px;
-    padding-bottom: 0;
-    border-radius: 12px 12px 0px 0px;
+    padding-bottom: 22px;
+    border-radius: 12px;
     text-decoration: none;
     height: 350px;
     
@@ -61,6 +61,8 @@ main {
     border-radius: 0px 0px 12px 12px;
     display: flex;
     overflow: hidden;
+    position: relative;
+    top: -12px;
 }
 
 .alterar, .deletar {
