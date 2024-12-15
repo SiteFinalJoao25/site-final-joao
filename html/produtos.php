@@ -14,10 +14,8 @@ require "../php/conexao.php"; ?>
 
 <body>
     <?php include "header.php"; ?>
-
     <main style=" position: relative; top: 70px;">
         <div class="container-produtos">
-
             <?php
             $categoria = $_GET['cat'];
             if ($categoria == 0) {

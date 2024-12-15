@@ -30,14 +30,18 @@ require "../php/conexao.php";
                 <a href="produtos.php?cat=3" class="navbar_link">PERFUMES</a>
                 <a href="produtos.php?cat=4" class="navbar_link">PULSEIRAS</a>
                 <a href="produtos.php?cat=0" class="navbar_link">TODOS OS PRODUTOS</a>
-
                 <?php // Verifica se o usuário está logado para exibir o link de "Minhas Compras"
                 if (isset($_SESSION["login"]) && isset($_SESSION["senha"])) { ?>
                 <a href="compras.php" class="navbar_link">MINHAS COMPRAS</a>
                 <?php } ?>
             </nav>
         </div>
-
+        <div class="barra-pesquisa">
+            <form action="result.php" method="POST">
+                <input type="text" name="strBusca" class="input-pesquisa">
+                <button type="submit" name="pesquisa" class="button-pesquisa"><img src="../imagens/search.svg" alt="" width="30px"></button>
+            </form>
+        </div>
         <div class="header-right">
             <div class="logado">
                 <?php // Exibe uma saudação com o nome do usuário logado
