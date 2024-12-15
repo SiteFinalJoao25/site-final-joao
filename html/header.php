@@ -25,10 +25,12 @@ require "../php/conexao.php";
             
             <!-- Barra de navegação com links para diferentes categorias de produtos -->
             <nav class="navbar">
-                <a href="produtos.php" class="navbar_link">ÓCULOS</a>
-                <a href="produtos.php" class="navbar_link">PULSEIRAS</a>
-                <a href="produtos.php" class="navbar_link">RELÓGIOS</a>
-                <a href="produtos.php" class="navbar_link">PERFUMES</a>
+                <a href="produtos.php?cat=1" class="navbar_link">ÓCULOS</a>
+                <a href="produtos.php?cat=2" class="navbar_link">RELÓGIOS</a>
+                <a href="produtos.php?cat=3" class="navbar_link">PERFUMES</a>
+                <a href="produtos.php?cat=4" class="navbar_link">PULSEIRAS</a>
+                <a href="produtos.php?cat=0" class="navbar_link">TODOS OS PRODUTOS</a>
+
                 <?php // Verifica se o usuário está logado para exibir o link de "Minhas Compras"
                 if (isset($_SESSION["login"]) && isset($_SESSION["senha"])) { ?>
                 <a href="compras.php" class="navbar_link">MINHAS COMPRAS</a>

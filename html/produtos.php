@@ -19,7 +19,12 @@ require "../php/conexao.php"; ?>
         <div class="container-produtos">
 
             <?php
-            $sql = "SELECT * FROM PRODUTO";
+            $categoria = $_GET['cat'];
+            if ($categoria == 0) {
+                $sql = "SELECT * FROM PRODUTO";
+            } else {
+                $sql = "SELECT * FROM PRODUTO WHERE FK_ID_CATEGORIA = $categoria";
+            }
             $produtos = mysqli_query($conexao, $sql);
             if (mysqli_num_rows($produtos) > 0) {
                 while ($produto = mysqli_fetch_assoc($produtos)) { ?>
