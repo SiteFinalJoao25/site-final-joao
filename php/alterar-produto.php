@@ -55,11 +55,28 @@ if (!isset($_SESSION["login"]) && !isset($_SESSION["senha"])) {
             "PROD_IMAGE"
         ]; ?>">
         <br>
+        <label for="categoria">Cód. Categoria</label>
+        <input type="number" name="categoria" id="categoria" value="<?php echo $arrayProduto[
+            "FK_ID_CATEGORIA"
+        ]; ?>">
+        <br>
         <input type="hidden" name="id" id="id" value="<?php echo $_GET[
             "id"
         ]; ?>">
         <input type="submit" value="Alterar" name="alterar_produto">
     </form>
+    <h3>Guia de categorias</h3>
+    <ul>
+        <?php 
+            $sql = "SELECT * FROM CATEGORIA";
+            $query = mysqli_query($conexao, $sql);
+            while ($categoria = mysqli_fetch_assoc($query)) {
+        ?>
+        <li>Categoria <?php echo $categoria['DESC_CAT']?>: #<?php echo $categoria['ID_CATEGORIA']?></li>
+        <?php 
+            }
+        ?>
+    </ul>
 </body>
 
 </html>

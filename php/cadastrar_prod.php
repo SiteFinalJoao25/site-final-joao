@@ -13,7 +13,7 @@ if (!isset($_SESSION["login"]) && !isset($_SESSION["senha"])) {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
@@ -41,8 +41,25 @@ if (!isset($_SESSION["login"]) && !isset($_SESSION["senha"])) {
         <label for="imagem">Imagem (URL)</label>
         <input type="text" name="imagem" id="imagem">
         <br>
+        <!-- categoria -->
+        <label for="categoria">Cód. Categoria</label>
+        <input type="number" name="categoria" id="categoria">
+        <br>
         <input type="submit" value="Cadastrar" name="cadastrar_produto">
     </form>
+
+    <h3>Guia de categorias</h3>
+    <ul>
+        <?php 
+            $sql = "SELECT * FROM CATEGORIA";
+            $query = mysqli_query($conexao, $sql);
+            while ($categoria = mysqli_fetch_assoc($query)) {
+        ?>
+        <li>Categoria <?php echo $categoria['DESC_CAT']?>: #<?php echo $categoria['ID_CATEGORIA']?></li>
+        <?php 
+            }
+        ?>
+    </ul>
 </body>
 
 </html>

@@ -73,9 +73,10 @@ if (isset($_POST["cadastrar_produto"])) {
     $descproduto = $_POST["descprod"];
     $valorprod = $_POST["valor"];
     $imagemprod = $_POST["imagem"];
+    $categProd = $_POST["categoria"];
 
     //Inserindo as informações no banco de dados
-    $sql = "INSERT INTO PRODUTO (PROD_NAME, PROD_DESC, VALOR, PROD_IMAGE) VALUES ('$nomeproduto', '$descproduto', $valorprod, '$imagemprod')";
+    $sql = "INSERT INTO PRODUTO (PROD_NAME, PROD_DESC, VALOR, PROD_IMAGE, FK_ID_CATEGORIA) VALUES ('$nomeproduto', '$descproduto', $valorprod, '$imagemprod', $categProd)";
     mysqli_query($conexao, $sql);
 
     if (mysqli_affected_rows($conexao) > 0) {
@@ -85,24 +86,27 @@ if (isset($_POST["cadastrar_produto"])) {
         echo "Erro ao adicionar o produto";
     }
 }
+
+
 if (isset($_POST["alterar_produto"])) {
     // Pegando as informações do formulário
     $nomeproduto = $_POST["nomeprod"];
     $descproduto = $_POST["descprod"];
     $valorprod = $_POST["valor"];
     $imagemprod = $_POST["imagem"];
+    $categProd = $_POST["categoria"];
 
     $idProduto = $_POST["id"];
 
     //Inserindo as informações no banco de dados
-    $sql = "UPDATE PRODUTO SET PROD_NAME = '$nomeproduto', PROD_DESC = '$descproduto', VALOR = $valorprod, PROD_IMAGE = '$imagemprod' WHERE ID_PROD = $idProduto";
+    $sql = "UPDATE PRODUTO SET PROD_NAME = '$nomeproduto', PROD_DESC = '$descproduto', VALOR = $valorprod, PROD_IMAGE = '$imagemprod', FK_ID_CATEGORIA = $categProd WHERE ID_PROD = $idProduto";
     mysqli_query($conexao, $sql);
 
     if (mysqli_affected_rows($conexao) > 0) {
         echo "Produto alterado com sucesso";
         header("Location: ../html/produtos.php");
     } else {
-        echo "Erro ao alterado o produto";
+        echo "Erro ao alterar o produto";
     }
 }
 
