@@ -124,10 +124,6 @@ if (isset($_POST["updateQuant"])) {
 
 if (isset($_POST["deletar_produto"])) {
     // Pegando as informações do formulário
-    $nomeproduto = $_POST["nomeprod"];
-    $descproduto = $_POST["descprod"];
-    $valorprod = $_POST["valor"];
-    $imagemprod = $_POST["imagem"];
 
     $idProduto = $_POST["id"];
 
@@ -139,7 +135,7 @@ if (isset($_POST["deletar_produto"])) {
         echo "Produto deletado com sucesso";
         header("Location: ../html/produtos.php");
     } else {
-        echo "Erro ao deletar o produto";
+        echo "Erro ao deletar o produto: ". mysqli_error($conexao);
     }
 }
 
