@@ -37,7 +37,7 @@ require "../php/conexao.php";
             </nav>
         </div>
         <div class="barra-pesquisa">
-            <form action="../php/acoes.php">
+            <form action="result.php" method="POST">
                 <input type="text" name="strBusca" class="input-pesquisa">
                 <button type="submit" name="pesquisa" class="button-pesquisa"><img src="../imagens/search.svg" alt="" width="30px"></button>
             </form>
