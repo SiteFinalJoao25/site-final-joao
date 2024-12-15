@@ -201,7 +201,7 @@ if (isset($_POST["finalizar-compra"])) {
             $idCompra = $arrayIdCompra["ID_COMPRA"];
 
             //REGISTRA OS ITENS NA TEBELA ITENS_COMPRA
-            $sql = "INSERT INTO ITENS_COMPRA (ID_PRODUTO, FK_QUANT, FK_NUM_COMPRA, FK_PROD_CART_ID, FK_ID_COMPRA) VALUES ($idProduto, $quant, $numCompras, $idPosCart, $idCompra)";
+            $sql = "INSERT INTO ITENS_COMPRA (ID_PRODUTO, FK_QUANT, FK_NUM_COMPRA, FK_PROD_CART_ID, FK_ID_COMPRA, FK_VALOR) VALUES ($idProduto, $quant, $numCompras, $idPosCart, $idCompra, $valor)";
             mysqli_query($conexao, $sql);
 
             //MANDA PARA A PÁGINA DE NOTA FISCAL SE A OPERAÇÃO FOR BEM SUCEDIDA

@@ -44,8 +44,8 @@ require "../php/conexao.php"; ?>
             // Verifica se o usuário possui compras
             if (mysqli_num_rows($compras) > 0) {
                 // Itera sobre cada compra encontrada
-                foreach ($compras as $compra) {
-                    $numeroCompra = $compra["NUM_COMPRA"]; ?>
+                while ($compra = mysqli_fetch_assoc($compras)) {
+                    $numeroCompra = $compra["FK_NUM_COMPRA"]; ?>
                 <div class="container_tabela">
                     <table>
                         <thead>
@@ -60,41 +60,50 @@ require "../php/conexao.php"; ?>
                         <tbody>
                             <?php
                             // Consulta para buscar os itens da compra e informações do produto
-                            $sql = "SELECT * FROM ITENS_COMPRA, PRODUTO WHERE NUM_COMPRA = $numeroCompra AND ID_PROD = ID_PRODUTO";
+                            $sql = "SELECT * FROM ITENS_COMPRA, PRODUTO WHERE FK_NUM_COMPRA = $numeroCompra AND ID_PROD = ID_PRODUTO";
                             $itens = mysqli_query($conexao, $sql);
 
                             // Verifica se existem itens na compra
                             if (mysqli_num_rows($itens) > 0) {
                                 // Itera sobre cada item encontrado
-                                foreach ($itens as $item) { ?>
+                                while ($item = mysqli_fetch_assoc($itens)) {
+                                    $img = $item['PROD_IMAGE']; 
+                                    $imgProduto = "../imagens/img_produtos/$img.jpg";
+                                    $nomeProd = $item['PROD_NAME'];
+                                    $valorProd = $item['FK_VALOR'];
+                                    $quantProd = $item['FK_QUANT'];
+
+                                ?>
                             <tr>
                                 <td>
                                     <!-- Exibe a imagem do produto -->
-                                    <img src="<?php echo $item[
-                                        "PROD_IMAGE"
-                                    ]; ?>" alt="Imagem produto" width="100px">
+                                    <img src="<?php echo $imgProduto ?>" alt="Imagem produto" width="100px">
                                 </td>
                                 <!-- Exibe as informações do produto -->
-                                <td><?php echo $item["PROD_NAME"]; ?></td>
-                                <td>R$<?php echo $item["FK_VALOR"]; ?></td>
-                                <td><?php echo $item["QUANT"]; ?></td>
-                                <td>R$<?php echo $item["FK_VALOR"] *
-                                    $item["QUANT"]; ?></td>
+                                <td><?php echo $nomeProd ?></td>
+                                <td>R$<?php echo  number_format($valorProd, 2, ",", ".") ?></td>
+                                <td><?php echo $quantProd ?></td>
+                                <td>R$<?php echo number_format($valorProd*$quantProd, 2, ",", ".") ?></td>
                             </tr>
                             <?php }
                             }
+
+                            //FORMATANDO A DATA E HORA DA COMPRA
+                            $timestamp = $compra['HORA_COMPRA'];
+                            $dateTime = new DateTime($timestamp);
+                            $data = $dateTime->format('d-m-Y');
+                            $hora = $dateTime->format('H:i');
                             ?>
                         </tbody>
                     </table>
                     <div class="info_compra">
                         <!-- Exibe as informações da compra -->
-                        <p>Compra <?php echo $compra["NUM_COMPRA"]; ?></p>
-                        <p>Data <?php echo $compra["HORA_COMPRA"]; ?></p>
-                        <p>Total: R$<?php echo $compra["TOTAL_COMPRA"]; ?></p>
+                        <p>ID Compra: <?php echo $compra["ID_COMPRA"]; ?></p>
+                        <p>Data: <?php echo $data ?></p>
+                        <p>Hora: <?php echo $hora?></p>
+                        <p>Total: R$<?php echo number_format($compra["TOTAL_COMPRA"], 2, ",", "."); ?></p>
                         <!-- Link para a nota fiscal -->
-                        <a href="notafiscal.php?id=<?php echo $compra[
-                            "NUM_COMPRA"
-                        ]; ?>">Ver nota fiscal</a>
+                        <a href="notafiscal.php?id=<?php echo $compra["NUM_COMPRA"]; ?>">Ver nota fiscal</a>
                     </div>
                 </div>
 
