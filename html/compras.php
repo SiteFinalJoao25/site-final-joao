@@ -103,7 +103,7 @@ require "../php/conexao.php"; ?>
                         <p>Hora: <?php echo $hora?></p>
                         <p>Total: R$<?php echo number_format($compra["TOTAL_COMPRA"], 2, ",", "."); ?></p>
                         <!-- Link para a nota fiscal -->
-                        <a href="notafiscal.php?id=<?php echo $compra["NUM_COMPRA"]; ?>">Ver nota fiscal</a>
+                        <a href="notafiscal.php?idCompra=<?php echo $compra["ID_COMPRA"]; ?>">Ver nota fiscal</a>
                     </div>
                 </div>
 
