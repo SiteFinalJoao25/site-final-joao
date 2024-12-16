@@ -10,16 +10,14 @@
 </head>
 
 <body>
-    <?php
-    include 'header.php';
-  ?>
+    <?php include "header.php"; ?>
     <main>
         <div class="container_cards">
             <div class="card">
                 <p class="titulo_card">ÓCULOS</p>
                 <p class="desconto">20<span class="porcentagem">%</span><span class="off">OFF</span></p>
                 <p class="tempo_limitado">TEMPO LIMITADO</p>
-                <a href="produtos.php" class="botao_compra">COMPRAR</a>
+                <a href="produtos.php?cat=1" class="botao_compra">COMPRAR</a>
             </div>
             <div class="card" style="padding: 0px;">
                 <img src="../imagens/oculos1.png" alt="" width="100%">
@@ -28,7 +26,7 @@
                 <p class="titulo_card" id="titulo_card_2">PULSEIRAS <br>E COLARES</p>
                 <p class="desconto">15<span class="porcentagem">%</span><span class="off">OFF</span></p>
                 <p class="tempo_limitado">TEMPO LIMITADO</p>
-                <a href="produtos.php" class="botao_compra">COMPRAR</a>
+                <a href="produtos.php?cat=4" class="botao_compra">COMPRAR</a>
             </div>
             <div class="card" style="padding: 0px;">
                 <img src="../imagens/pulseira1.png" alt="" width="100%">

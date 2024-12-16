@@ -1,6 +1,5 @@
 <?php
-  require '../php/conexao.php';
-?>
+require "../php/conexao.php"; ?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -14,43 +13,56 @@
 </head>
 
 <body>
-    <?php 
-        include 'header.php';
-    ?>
-
+    <?php include "header.php"; ?>
     <main style=" position: relative; top: 70px;">
         <div class="container-produtos">
-
             <?php
+            $categoria = $_GET['cat'];
+            if ($categoria == 0) {
                 $sql = "SELECT * FROM PRODUTO";
-                $produtos = mysqli_query($conexao, $sql);
-                if(mysqli_num_rows($produtos) > 0) {
-                    while ($produto = mysqli_fetch_assoc($produtos)) {
-                ?>
+            } else {
+                $sql = "SELECT * FROM PRODUTO WHERE FK_ID_CATEGORIA = $categoria";
+            }
+            $produtos = mysqli_query($conexao, $sql);
+            if (mysqli_num_rows($produtos) > 0) {
+                while ($produto = mysqli_fetch_assoc($produtos)) { ?>
                 <div class="container-card-alt">
-                    <a href="visualizar.php?id=<?php echo $produto['ID_PROD']; ?>" class="card-produto">
-                        <img src="../imagens/img_produtos/<?php echo $produto['PROD_IMAGE']?>.jpg" class="img-produto" width="210px" height="250px">
-                        <p class="produto-texto"><?php echo  $produto['PROD_NAME']?></p>
-                        <p class="produto-preco">R$<?php echo  $produto['VALOR']?></p>
+                    <a href="visualizar.php?id=<?php echo $produto[
+                        "ID_PROD"
+                    ]; ?>" class="card-produto">
+                        <img src="../imagens/img_produtos/<?php echo $produto[
+                            "PROD_IMAGE"
+                        ]; ?>.jpg" class="img-produto" width="210px" height="250px">
+                        <p class="produto-texto"><?php echo $produto[
+                            "PROD_NAME"
+                        ]; ?></p>
+                        <p class="produto-preco">R$<?php echo $produto[
+                            "VALOR"
+                        ]; ?></p>
                     </a>
                     <div class="acoesProd">
-                        <?php
-                            if(isset($_SESSION['login']) && isset($_SESSION['senha'])) {
-                                if($_SESSION['login'] == "teste@teste.com" && $_SESSION['senha'] == "admin" ){
-                        ?>
-                            <a href="../php/alterar-produto.php?id=<?php echo $produto['ID_PROD']?>" class="alterar">Alterar</a>
-                            <a href="../php/deletar-produto.php?id=<?php echo $produto['ID_PROD']?>" class="deletar">Deletar</a>
-                        <?php
-                            }
-                        }
-                        ?>
+                        <?php if (
+                            isset($_SESSION["login"]) &&
+                            isset($_SESSION["senha"])
+                        ) {
+                            if (
+                                $_SESSION["login"] == "teste@teste.com" &&
+                                $_SESSION["senha"] == "admin"
+                            ) { ?>
+                            <a href="../php/alterar-produto.php?id=<?php echo $produto[
+                                "ID_PROD"
+                            ]; ?>" class="alterar">Alterar</a>
+                            <a href="../php/deletar-produto.php?id=<?php echo $produto[
+                                "ID_PROD"
+                            ]; ?>" class="deletar">Deletar</a>
+                        <?php }
+                        } ?>
                     </div>
                 </div>
-            <?php
-                    }
-                } else {
+            <?php }
+            } else {
                 echo "nenhum produto encontrado";
-                }
+            }
             ?>
 
         </div>

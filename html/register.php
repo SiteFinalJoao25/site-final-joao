@@ -1,7 +1,6 @@
-<?php 
-    // Inclui o arquivo de conexão com o banco de dados
-    require '../php/conexao.php';
-?>
+<?php
+// Inclui o arquivo de conexão com o banco de dados
+require "../php/conexao.php"; ?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -19,7 +18,9 @@
         <div class="main-content">
             <h1 class="titulo">Criar Conta</h1>
             <!-- Formulário para criar conta -->
-            <form action="<?php echo  $_SERVER['PHP_SELF'] ?>" class="form" method="post">
+            <form action="<?php echo $_SERVER[
+                "PHP_SELF"
+            ]; ?>" class="form" method="post">
                 <!-- Campo para o nome de usuário -->
                 <div class="input-group">
                     <label for="usuario" class="label">Usuário</label>
@@ -59,47 +60,37 @@
                 </div>
             </form>
 
-            <?php 
-                // Verifica se o botão de adicionar usuário foi clicado
-                if(isset($_POST['add_usuario'])) {
-                    $usuario = $_POST['usuario']; // Obtém o nome de usuário
-                    $email = $_POST['email'];     // Obtém o email
-                    $senha = $_POST['senha'];     // Obtém a senha
-                    $nasc = $_POST['nasc'];       // Obtém a data de nascimento
-                    $sexo = $_POST['sexo'];       // Obtém o sexo
+            <?php // Verifica se o botão de adicionar usuário foi clicado
+            if (isset($_POST["add_usuario"])) {
+                $usuario = $_POST["usuario"]; // Obtém o nome de usuário
+                $email = $_POST["email"]; // Obtém o email
+                $senha = $_POST["senha"]; // Obtém a senha
+                $nasc = $_POST["nasc"]; // Obtém a data de nascimento
+                $sexo = $_POST["sexo"]; // Obtém o sexo
 
-                    // Verifica se o nome de usuário já existe no banco
-                    $sql = "SELECT USERNAME FROM USER WHERE USERNAME = '$usuario'";
-                    $query = mysqli_query($conexao, $sql);
+                // Verifica se o nome de usuário já existe no banco
+                $sql = "SELECT USERNAME FROM USER WHERE USERNAME = '$usuario'";
+                $query = mysqli_query($conexao, $sql);
 
-                    if (mysqli_num_rows($query) > 0) {
-            ?>
-            <p style="font-family: 'Poppins', sans-serif; color: orange;">Já existe um usuario de nome <?php echo $usuario ?>.
+                if (mysqli_num_rows($query) > 0) { ?>
+            <p style="font-family: 'Poppins', sans-serif; color: orange;">Já existe um usuario de nome <?php echo $usuario; ?>.
             </p>
-            <?php 
-                    } else {
-                        // Verifica se o email já está em uso
-                        $sql = "SELECT EMAIL FROM USER WHERE EMAIL = '$email'";
-                        $query = mysqli_query($conexao, $sql);
-                        if (mysqli_num_rows($query) > 0) {
-            ?>
+            <?php } else {// Verifica se o email já está em uso
+                    $sql = "SELECT EMAIL FROM USER WHERE EMAIL = '$email'";
+                    $query = mysqli_query($conexao, $sql);
+                    if (mysqli_num_rows($query) > 0) { ?>
             <p style="font-family: 'Poppins', sans-serif; color: orange;">Já existe um usuario com esse email.</p>
-            <?php 
+            <?php } else {// Insere o novo usuário no banco de dados
+                        $sql = "INSERT INTO USER (USERNAME, EMAIL, SENHA, DATA_NASC, SEXO) VALUES ('$usuario', '$email', '$senha', '$nasc', '$sexo')";
+                        mysqli_query($conexao, $sql);
+
+                        if (mysqli_affected_rows($conexao) > 0) {
+                            // Redireciona para a página de login em caso de sucesso
+                            header("Location: login.php");
                         } else {
-                            // Insere o novo usuário no banco de dados
-                            $sql = "INSERT INTO USER (USERNAME, EMAIL, SENHA, DATA_NASC, SEXO) VALUES ('$usuario', '$email', '$senha', '$nasc', '$sexo')";
-                            mysqli_query($conexao, $sql);
-                
-                            if(mysqli_affected_rows($conexao) > 0) {
-                                // Redireciona para a página de login em caso de sucesso
-                                header('Location: login.php');
-                            } else {
-                                echo "erro ao adicionar usuario";
-                            }
-                        }   
-                    }
-                }
-            ?>
+                            echo "erro ao adicionar usuario";
+                        }}}
+            } ?>
         </div>
     </main>
 </body>
