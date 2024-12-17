@@ -15,7 +15,7 @@ main {
     margin: auto;
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
+    align-items: center;
 }
 
 .cart-table-container {
@@ -34,12 +34,13 @@ main {
 .cart-table th,
 .cart-table td {
     padding: 10px;
-    text-align: left;
+    text-align: center;
     color: #e2e2e2;
 }
 
 .cart-table th {
     background-color: #694156;
+    text-align: left;
     
 }
 
@@ -48,7 +49,7 @@ main {
 }
 
 .cart-table td {
-    vertical-align: middle;
+    text-align: center;
 }
 
 .cart-table button {
@@ -126,6 +127,7 @@ button.updateQuant:hover {
 .formquant {
     display: flex;
     gap: 5px;
+    justify-content: center;
 }
 
 .form-finalizar {
@@ -141,4 +143,33 @@ button.updateQuant:hover {
 
 .nomeProd:hover {
     text-decoration: underline;
+}
+
+.vazio {
+    height: 50vh;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.vazio h1 {
+    color: #1d1218;
+}
+
+.vazio a {
+    text-decoration: none;
+    color: white;
+}
+
+.vazio a:hover {
+    text-decoration: underline;
+    color: white;
+}
+
+.imgCart {
+    width: 150px;
+    border: 5px solid #694156;
+    border-radius: 10px;
 }

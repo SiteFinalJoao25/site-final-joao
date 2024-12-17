@@ -25,14 +25,31 @@ require "../php/conexao.php"; ?>
     }
     ?>
     <main>
+        <?php 
+            // Recupera as credenciais do usuário na sessão
+            $email = $_SESSION["login"];
+            $senha = $_SESSION["senha"];
+            // Consulta para obter o ID do usuário logado
+            $sql = "SELECT * FROM USER WHERE EMAIL = '$email' AND SENHA = '$senha'";
+            $query = mysqli_query($conexao, $sql);
+            $arrayId = mysqli_fetch_array($query);
+            $userId = $arrayId["USER_ID"];
+            ?>
+            <?php
+            //SELECIONA OS PRODUTOS DO CARRINHO DESSE USUÁRIO E VERIFICA SE ESTÁ VAZIO
+            $sql = "SELECT * FROM CARRINHO WHERE CARR_USER_ID = $userId";
+            $query = mysqli_query($conexao, $sql);
+            if(mysqli_num_rows($query) > 0) {
+        ?>
         <div class="cart-table-container">
             <table class="cart-table">
                 <thead>
                     <tr>
-                        <th>Nome</th>
-                        <th>Quantidade</th>
-                        <th>Valor</th>
-                        <th>Ação</th>
+                        <th>Seu Carrinho</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -64,6 +81,7 @@ require "../php/conexao.php"; ?>
                             $idPosCart = $item["PROD_CART_ID"];
                             ?>
                     <tr>
+                        <td><img src="../imagens/img_produtos/<?php echo $prodImage?>.jpg" alt="" class="imgCart"></td>
                         <td><?php echo "<a href='visualizar.php?id=$prodId' class='nomeProd'>$prodName</a>"; ?></td>
                         <td>
                             <form action="../php/acoes.php?idPosCart=<?php echo $idPosCart; ?>" method="POST" class="formquant">
@@ -82,7 +100,7 @@ require "../php/conexao.php"; ?>
                         <td>
                             <form action="../php/acoes.php" method="GET">
                                 <!-- Botão para excluir o item do carrinho -->
-                                <button type="submit" name="delete_cart_item" value="<?php echo $idPosCart; ?>">Excluir</button>
+                                <button type="submit" name="delete_cart_item" value="<?php echo $idPosCart; ?>"><img src="../imagens/lixeira.svg" alt="" width="20px"></button>
                             </form>
                         </td>
                     </tr>
@@ -127,6 +145,16 @@ require "../php/conexao.php"; ?>
                 <button type="submit" class="voltar" name="finalizar-compra">Finalizar Compra</button>
             </form>
         </div>
+        <?php 
+            } else {
+        ?>
+            <div class="vazio">
+                <h1>Ainda não há nada aqui...</h1>
+                <a href="index.php">Procurar produtos</a>
+            </div>
+        <?php     
+            }
+        ?>
     </main>
 </body>
 
