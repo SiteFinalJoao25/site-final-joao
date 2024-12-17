@@ -6,6 +6,7 @@ if (!isset($_SESSION["login"]) && !isset($_SESSION["senha"])) {
     header("Location: ../html/naologado.php");
 }
 
+
 if (isset($_POST["add_cart"])) {
     $produto_id = $_POST["add_cart"];
     $sql = "SELECT * FROM PRODUTO WHERE ID_PROD = $produto_id";
@@ -81,7 +82,7 @@ if (isset($_POST["cadastrar_produto"])) {
 
     if (mysqli_affected_rows($conexao) > 0) {
         echo "Produto adicionado com sucesso";
-        header("Location: ../html/produtos.php");
+        header("Location: cadastrar_prod.php");
     } else {
         echo "Erro ao adicionar o produto";
     }
@@ -89,24 +90,19 @@ if (isset($_POST["cadastrar_produto"])) {
 
 
 if (isset($_POST["alterar_produto"])) {
-    // Pegando as informações do formulário
-    $nomeproduto = $_POST["nomeprod"];
-    $descproduto = $_POST["descprod"];
-    $valorprod = $_POST["valor"];
-    $imagemprod = $_POST["imagem"];
-    $categProd = $_POST["categoria"];
+    $nomeProd = $_POST['nomeprod'];
+    $descprod = $_POST['descprod'];
+    $valorprod = $_POST['valor'];
+    $imagemprod = $_POST['imagem'];
+    $categProd = $_POST['categoria'];
+    $idprod = $_POST['id'];
 
-    $idProduto = $_POST["id"];
-
-    //Inserindo as informações no banco de dados
-    $sql = "UPDATE PRODUTO SET PROD_NAME = '$nomeproduto', PROD_DESC = '$descproduto', VALOR = $valorprod, PROD_IMAGE = '$imagemprod', FK_ID_CATEGORIA = $categProd WHERE ID_PROD = $idProduto";
+    $sql = "UPDATE PRODUTO SET PROD_NAME = '$nomeProd', PROD_DESC = '$descprod', VALOR = $valorprod, PROD_IMAGE = '$imagemprod', FK_ID_CATEGORIA = $categProd WHERE ID_PROD = $idprod";
     mysqli_query($conexao, $sql);
-
     if (mysqli_affected_rows($conexao) > 0) {
-        echo "Produto alterado com sucesso";
         header("Location: ../html/produtos.php");
     } else {
-        echo "Erro ao alterar o produto";
+        echo "Erro ao alterar: " . mysqli_error($conexao);
     }
 }
 
@@ -137,13 +133,18 @@ if (isset($_POST["deletar_produto"])) {
 
     if (mysqli_affected_rows($conexao) > 0) {
         echo "Produto deletado com sucesso";
-        header("Location: ../html/produtos.php");
+        header("Location: deletar-produto.php");
     } else {
         echo "Erro ao deletar o produto: ". mysqli_error($conexao);
     }
 }
 
+
+
+
 if (isset($_POST["finalizar-compra"])) {
+
+
     //pegando o id do usuário
     $email = $_SESSION["login"];
     $senha = $_SESSION["senha"];
@@ -154,7 +155,7 @@ if (isset($_POST["finalizar-compra"])) {
     $userId = $arrayId["USER_ID"];
 
     // Verifica se tem algum item dentro do carrinho
-    $sql = "SELECT * FROM CARRINHO WHERE CARR_USER_ID = $userId";
+    $sql = "SELECT * FROM CARRINHO WHERE CARR_USER_ID = $userId AND COMPRADO = 0";
     $query = mysqli_query($conexao, $sql);
     if (mysqli_num_rows($query) > 0) {
         $sql = "SELECT NUM_COMPRAS FROM USER WHERE USER_ID = $userId";
@@ -211,6 +212,8 @@ if (isset($_POST["finalizar-compra"])) {
                 echo "Algo deu errado: " . mysqli_error($conexao);
             }
         }
+    } else {
+        echo "Adicione um item antes de comprar. <a href='../html/produtos.php'>Comprar Produtos</a>";
     }
 }
 

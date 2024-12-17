@@ -17,10 +17,10 @@ require "../php/conexao.php"; ?>
     <main style=" position: relative; top: 70px;">
         <div class="container-produtos">
             <?php
-            $categoria = $_GET['cat'];
-            if ($categoria == 0) {
-                $sql = "SELECT * FROM PRODUTO";
+            if (!isset($_GET['cat'])) {
+                $sql = "SELECT * FROM PRODUTO ORDER BY FK_ID_CATEGORIA";
             } else {
+                $categoria = $_GET['cat'];
                 $sql = "SELECT * FROM PRODUTO WHERE FK_ID_CATEGORIA = $categoria";
             }
             $produtos = mysqli_query($conexao, $sql);
@@ -32,7 +32,7 @@ require "../php/conexao.php"; ?>
                     ]; ?>" class="card-produto">
                         <img src="../imagens/img_produtos/<?php echo $produto[
                             "PROD_IMAGE"
-                        ]; ?>.jpg" class="img-produto" width="210px" height="250px">
+                        ]; ?>.jpg" class="img-produto" width="210px" height="210px">
                         <p class="produto-texto"><?php echo $produto[
                             "PROD_NAME"
                         ]; ?></p>

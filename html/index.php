@@ -23,7 +23,7 @@
                 <img src="../imagens/oculos1.png" alt="" width="100%">
             </div>
             <div class="card">
-                <p class="titulo_card" id="titulo_card_2">PULSEIRAS <br>E COLARES</p>
+                <p class="titulo_card" id="titulo_card_2">COLARES</p>
                 <p class="desconto">15<span class="porcentagem">%</span><span class="off">OFF</span></p>
                 <p class="tempo_limitado">TEMPO LIMITADO</p>
                 <a href="produtos.php?cat=4" class="botao_compra">COMPRAR</a>
