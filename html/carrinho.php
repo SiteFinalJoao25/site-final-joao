@@ -86,7 +86,7 @@ require "../php/conexao.php"; ?>
                         <td>
                             <form action="../php/acoes.php?idPosCart=<?php echo $idPosCart; ?>" method="POST" class="formquant">
                                 <!-- Campo para alterar a quantidade do produto -->
-                                <input type="number" name="produto_<?php echo $idPosCart; ?>" title="produto_<?php echo $prodId; ?>" style="width: 40px;" value="<?php echo $prodQuant; ?>" min="1" class="inputQuant">
+                                <input type="number" name="produto_<?php echo $idPosCart; ?>" title="produto_<?php echo $prodId; ?>" style="width: 40px;" value="<?php echo $prodQuant; ?>" min="0" class="inputQuant">
                                 <button type="submit" name="updateQuant" class="updateQuant"><img src="../imagens/updateQuant.svg" alt="" width="20px"></button>
                             </form>
                         </td>

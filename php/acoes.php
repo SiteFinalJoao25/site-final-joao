@@ -111,13 +111,23 @@ if (isset($_POST["updateQuant"])) {
     $idPosCart = $_GET["idPosCart"];
     if (isset($_POST["produto_$idPosCart"])) {
         $newQuant = $_POST["produto_$idPosCart"];
-        echo $newQuant;
-        $sql = "UPDATE CARRINHO SET QUANT = $newQuant WHERE PROD_CART_ID = $idPosCart";
-        mysqli_query($conexao, $sql);
-        if (mysqli_affected_rows($conexao) > 0) {
-            header("Location: ../html/carrinho.php");
+            if ($newQuant < 1){
+                $sql = "DELETE FROM CARRINHO WHERE PROD_CART_ID = $idPosCart";
+            mysqli_query($conexao, $sql);
+            if (mysqli_affected_rows($conexao) > 0) {
+                header("Location: ../html/carrinho.php");
+            } else {
+                echo "erro ao atualizar";
+            }
+
         } else {
-            echo "erro ao atualizar";
+            $sql = "UPDATE CARRINHO SET QUANT = $newQuant WHERE PROD_CART_ID = $idPosCart";
+            mysqli_query($conexao, $sql);
+            if (mysqli_affected_rows($conexao) > 0) {
+                header("Location: ../html/carrinho.php");
+            } else {
+                echo "erro ao atualizar";
+            }
         }
     }
 }
