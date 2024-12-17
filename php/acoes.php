@@ -35,11 +35,11 @@ if (isset($_POST["add_cart"])) {
             if (mysqli_num_rows($query) > 0) {
                 $quantBD = $arrayQuant["QUANT"];
                 $newQuant = $quant + $quantBD;
-                $sql = "UPDATE CARRINHO SET QUANT = $newQuant, COMPRADO = '0' WHERE FK_ID_PROD = $produto_id";
+                $sql = "UPDATE CARRINHO SET QUANT = $newQuant WHERE FK_ID_PROD = $produto_id";
                 mysqli_query($conexao, $sql);
                 header("Location: ../html/carrinho.php");
             } else {
-                $sql = "INSERT INTO CARRINHO (CARR_USER_ID, QUANT, FK_ID_PROD, VALOR, COMPRADO) VALUES ($userId, $quant, $produto_id, $valor, '0')";
+                $sql = "INSERT INTO CARRINHO (CARR_USER_ID, QUANT, FK_ID_PROD, VALOR) VALUES ($userId, $quant, $produto_id, $valor)";
                 mysqli_query($conexao, $sql);
 
                 if (mysqli_affected_rows($conexao) > 0) {
@@ -58,7 +58,7 @@ if (isset($_POST["add_cart"])) {
 if (isset($_GET["delete_cart_item"])) {
     $idPosCart = $_GET["delete_cart_item"];
 
-    $sql = "UPDATE CARRINHO SET QUANT = 0, COMPRADO = '1' WHERE PROD_CART_ID = $idPosCart";
+    $sql = "DELETE FROM CARRINHO WHERE PROD_CART_ID = $idPosCart";
     mysqli_query($conexao, $sql);
 
     if (mysqli_affected_rows($conexao) > 0) {
@@ -155,7 +155,7 @@ if (isset($_POST["finalizar-compra"])) {
     $userId = $arrayId["USER_ID"];
 
     // Verifica se tem algum item dentro do carrinho
-    $sql = "SELECT * FROM CARRINHO WHERE CARR_USER_ID = $userId AND COMPRADO = 0";
+    $sql = "SELECT * FROM CARRINHO WHERE CARR_USER_ID = $userId";
     $query = mysqli_query($conexao, $sql);
     if (mysqli_num_rows($query) > 0) {
         $sql = "SELECT NUM_COMPRAS FROM USER WHERE USER_ID = $userId";
@@ -181,7 +181,7 @@ if (isset($_POST["finalizar-compra"])) {
         mysqli_query($conexao, $sql);
 
         // Seleciona os itens do carrinho para inserir na tabela de itens da compra
-        $sql = "SELECT * FROM CARRINHO WHERE CARR_USER_ID = $userId AND COMPRADO = '0'";
+        $sql = "SELECT * FROM CARRINHO WHERE CARR_USER_ID = $userId";
         $itens = mysqli_query($conexao, $sql);
         while ($item = mysqli_fetch_assoc($itens)) {
             $idPosCart = $item["PROD_CART_ID"];
@@ -189,10 +189,9 @@ if (isset($_POST["finalizar-compra"])) {
             $quant = $item["QUANT"];
             $idProduto = $item["FK_ID_PROD"];
             $valor = $item["VALOR"];
-            $comprado = $item["COMPRADO"];
 
-            //ALTERA O STATUS "COMPRADO" DO ITEM DO CARRINHO PARA 1, PARA QUE ELE NÃO APAREÇA NO CARRINHO
-            $sql = "UPDATE CARRINHO SET COMPRADO = '1', QUANT = 0 WHERE PROD_CART_ID = $idPosCart";
+            //DELETA O PRODUTO DO CARRINHO QUANDO A COMPRA É FINALIZADA
+            $sql = "DELETE FROM CARRINHO WHERE PROD_CART_ID = $idPosCart";
             mysqli_query($conexao, $sql);
 
             //PUXA O ID DA COMPRA

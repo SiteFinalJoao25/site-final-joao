@@ -78,6 +78,8 @@ main {
 
 .botoes {
     display: flex;
+    flex-direction: column;
+    align-self: stretch;
     gap: 10px;
 }
 
@@ -90,6 +92,7 @@ main {
     border-radius: 10px;
     border: 1px solid #cccccc97;
     cursor: pointer;
+    text-align: center;
 }
 
 .inputQuant {
@@ -123,4 +126,19 @@ button.updateQuant:hover {
 .formquant {
     display: flex;
     gap: 5px;
+}
+
+.form-finalizar {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.nomeProd {
+    text-decoration: none;
+    color: white;
+}
+
+.nomeProd:hover {
+    text-decoration: underline;
 }

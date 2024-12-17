@@ -48,11 +48,11 @@ require "../php/conexao.php"; ?>
                     ?>
                     <?php
                     //SELECIONA OS PRODUTOS DO CARRINHO DESSE USUÁRIO E VERIFICA SE ESTÁ VAZIO
-                    $sql = "SELECT * FROM CARRINHO WHERE CARR_USER_ID = $userId AND COMPRADO = '0'";
+                    $sql = "SELECT * FROM CARRINHO WHERE CARR_USER_ID = $userId";
                     $query = mysqli_query($conexao, $sql);
                     if (mysqli_num_rows($query) > 0) {
                         //SELECIONANDO OS DADOS NECESSÁRIOS PARA MOSTRAR OS PRODUTOS
-                        $sql = "SELECT * FROM CARRINHO, PRODUTO WHERE FK_ID_PROD = ID_PROD AND CARR_USER_ID = $userId AND COMPRADO = '0'";
+                        $sql = "SELECT * FROM CARRINHO, PRODUTO WHERE FK_ID_PROD = ID_PROD AND CARR_USER_ID = $userId";
                         $itens = mysqli_query($conexao, $sql);
                         while ($item = mysqli_fetch_assoc($itens)) {
 
@@ -64,7 +64,7 @@ require "../php/conexao.php"; ?>
                             $idPosCart = $item["PROD_CART_ID"];
                             ?>
                     <tr>
-                        <td><?php echo $prodName; ?></td>
+                        <td><?php echo "<a href='visualizar.php?id=$prodId' class='nomeProd'>$prodName</a>"; ?></td>
                         <td>
                             <form action="../php/acoes.php?idPosCart=<?php echo $idPosCart; ?>" method="POST" class="formquant">
                                 <!-- Campo para alterar a quantidade do produto -->
@@ -98,7 +98,7 @@ require "../php/conexao.php"; ?>
             <div class="total">
                 <?php
                 // Calcula o valor total dos itens no carrinho
-                $sql = "SELECT SUM(VALOR*QUANT) TOTAL FROM CARRINHO WHERE CARR_USER_ID = $userId AND COMPRADO = '0'";
+                $sql = "SELECT SUM(VALOR*QUANT) TOTAL FROM CARRINHO WHERE CARR_USER_ID = $userId";
                 $query = mysqli_query($conexao, $sql);
                 if (mysqli_num_rows($query) > 0) {
                     $arrayTotal = mysqli_fetch_array($query);
@@ -112,13 +112,16 @@ require "../php/conexao.php"; ?>
 
         <div class="botoes">
             <!-- Botão para voltar à página de produtos -->
-            <a href="produtos.php" class="voltar">Voltar</a>
-            <form action="../php/acoes.php" method="POST">
+            <a href="produtos.php" class="voltar">Continuar comprando</a>
+            <form action="../php/acoes.php" method="POST" class="form-finalizar" >
                 <!-- Seleção da forma de pagamento -->
-                <select name="formaPag" id="formaPag">
+                <select name="formaPag" id="formaPag" required>
+                    <option value="">Selecionar Forma de pagamento</option>
                     <option value="PIX">PIX</option>
                     <option value="Cartão de Crédito">Cartão de crédito</option>
+                    <option value="Cartão de Débito">Cartão de Crédito</option>
                     <option value="boleto">Boleto</option>
+                    <option value="transferencia">transferência Bancária</option>
                 </select>
                 <!-- Botão para finalizar a compra -->
                 <button type="submit" class="voltar" name="finalizar-compra">Finalizar Compra</button>
