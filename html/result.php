@@ -33,7 +33,7 @@
                 $prodId = $result['ID_PROD'];
         ?>
             <a href="visualizar.php?id=<?php echo $prodId?>" class="cardResult">
-                <img src="../imagens/img_produtos/<?php echo $prodImg ?>.jpg" alt="">
+                <img src="../imagens/img_produtos/<?php echo $prodImg ?>" alt="">
                 <p><?php echo $prodName ?></p>
                 <p><?php echo $prodValor ?></p>
             </a>

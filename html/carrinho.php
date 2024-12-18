@@ -81,7 +81,7 @@ require "../php/conexao.php"; ?>
                             $idPosCart = $item["PROD_CART_ID"];
                             ?>
                     <tr>
-                        <td><img src="../imagens/img_produtos/<?php echo $prodImage?>.jpg" alt="" class="imgCart"></td>
+                        <td><img src="../imagens/img_produtos/<?php echo $prodImage?>" alt="" class="imgCart"></td>
                         <td><?php echo "<a href='visualizar.php?id=$prodId' class='nomeProd'>$prodName</a>"; ?></td>
                         <td>
                             <form action="../php/acoes.php?idPosCart=<?php echo $idPosCart; ?>" method="POST" class="formquant">
