@@ -62,7 +62,7 @@ session_start();
             if (isset($_POST["log_usuario"])) {
                 // Captura os dados do formulário
                 $login = $_POST["email"];
-                $senha = $_POST["senha"];
+                $senha = md5($_POST["senha"]);
 
                 // Query SQL para verificar as credenciais no banco de dados
                 $sql = "SELECT * FROM USER WHERE EMAIL = '$login' AND SENHA = '$senha'";
