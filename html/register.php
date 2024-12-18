@@ -64,7 +64,7 @@ require "../php/conexao.php"; ?>
             if (isset($_POST["add_usuario"])) {
                 $usuario = $_POST["usuario"]; // Obtém o nome de usuário
                 $email = $_POST["email"]; // Obtém o email
-                $senha = md5($_POST["senha"]); // Obtém a senha
+                $senha = $_POST["senha"]; // Obtém a senha
                 $nasc = $_POST["nasc"]; // Obtém a data de nascimento
                 $sexo = $_POST["sexo"]; // Obtém o sexo
 
