@@ -32,7 +32,7 @@ require "../php/conexao.php"; ?>
                     ]; ?>" class="card-produto">
                         <img src="../imagens/img_produtos/<?php echo $produto[
                             "PROD_IMAGE"
-                        ]; ?>.jpg" class="img-produto" width="210px" height="210px">
+                        ]; ?>" class="img-produto" width="210px" height="210px">
                         <p class="produto-texto"><?php echo $produto[
                             "PROD_NAME"
                         ]; ?></p>

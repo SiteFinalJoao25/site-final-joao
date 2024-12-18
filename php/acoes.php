@@ -143,7 +143,7 @@ if (isset($_POST["deletar_produto"])) {
 
     if (mysqli_affected_rows($conexao) > 0) {
         echo "Produto deletado com sucesso";
-        header("Location: deletar-produto.php");
+        header("Location: ../html/produtos.php");
     } else {
         echo "Erro ao deletar o produto: ". mysqli_error($conexao);
     }

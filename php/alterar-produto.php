@@ -45,7 +45,7 @@ if (!isset($_SESSION["login"]) && !isset($_SESSION["senha"])) {
         <br>
         <!-- imagem do produto -->
         <label for="imagem">Imagem (URL)</label>
-        <input type="text" name="imagem" id="imagem" value="<?php echo $arrayProduto["PROD_IMAGE"]; ?>">
+        <input type="file" name="imagem" id="imagem" value="<?php echo $arrayProduto["PROD_IMAGE"]; ?>">
         <br>
         <label for="categoria">Cód. Categoria</label>
         <input type="number" name="categoria" id="categoria" value="<?php echo $arrayProduto["FK_ID_CATEGORIA"]; ?>">

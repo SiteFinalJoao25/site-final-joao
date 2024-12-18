@@ -38,8 +38,8 @@ if (!isset($_SESSION["login"]) && !isset($_SESSION["senha"])) {
         <input type="number" name="valor" id="valor" step=".01">
         <br>
         <!-- imagem do produto -->
-        <label for="imagem">Imagem (URL)</label>
-        <input type="text" name="imagem" id="imagem">
+        <label for="imagem">Imagem</label>
+        <input type="file" name="imagem" id="imagem">
         <br>
         <!-- categoria -->
         <label for="categoria">Cód. Categoria</label>
