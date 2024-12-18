@@ -54,7 +54,7 @@ input[type="submit"] {
     transition: background-color 0.3s;
 }
 
-input[type="submit"]:hover {
+input[type="submit"]:hover, .voltar:hover{
     background-color: #5c3c47;
 }
 
@@ -64,4 +64,15 @@ input[type="submit"]:hover {
     justify-content: center;
     align-items: center;
     height: calc(100vh - 80px); /* Centraliza verticalmente */
+}
+
+.voltar {
+    color: #e2e2e2;
+    text-decoration: none;
+    background-color: #87506d;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s;
 }

@@ -29,6 +29,7 @@ if (!isset($_SESSION["login"]) && !isset($_SESSION["senha"])) {
             "id"
         ]; ?>">
         <input type="submit" value="deletar" name="deletar_produto">
+        <a href="../html/produtos.php" class="voltar">Voltar</a>
     </form>
 </body>
 

@@ -46,6 +46,7 @@ if (!isset($_SESSION["login"]) && !isset($_SESSION["senha"])) {
         <input type="number" name="categoria" id="categoria">
         <br>
         <input type="submit" value="Cadastrar" name="cadastrar_produto">
+        <a href="../html/produtos.php" class="voltar">Voltar</a>
     </form>
 
     <h3>Guia de categorias</h3>

@@ -52,7 +52,9 @@ if (!isset($_SESSION["login"]) && !isset($_SESSION["senha"])) {
         <br>
         <input type="hidden" name="id" id="id" value="<?php echo $_GET["id"]; ?>">
         <input type="submit" value="Alterar" name="alterar_produto">
+        <a href="../html/produtos.php" class="voltar">Voltar</a>
     </form>
+
     <h3>Guia de categorias</h3>
     <ul>
         <?php 

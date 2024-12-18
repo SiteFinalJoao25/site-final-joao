@@ -36,9 +36,7 @@ require "../php/conexao.php"; ?>
                         <p class="produto-texto"><?php echo $produto[
                             "PROD_NAME"
                         ]; ?></p>
-                        <p class="produto-preco">R$<?php echo $produto[
-                            "VALOR"
-                        ]; ?></p>
+                        <p class="produto-preco">R$<?php echo number_format($produto["VALOR"], 2, ",", "."); ?></p>
                     </a>
                     <div class="acoesProd">
                         <?php if (

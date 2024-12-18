@@ -37,7 +37,7 @@ require "../php/conexao.php"; ?>
             <!-- Imagem do produto -->
             <img src="../imagens/img_produtos/<?php echo $PRODUTO[
                 "PROD_IMAGE"
-            ]; ?>.jpg" alt="Imagem do produto" class="img-visualizar">
+            ]; ?>" alt="Imagem do produto" class="img-visualizar">
             <div class="textos-visualizar">
                 <div class="textos-top">
                     <!-- Nome do produto -->
@@ -49,9 +49,7 @@ require "../php/conexao.php"; ?>
                         "PROD_DESC"
                     ]; ?></p>
                     <!-- Preço do produto -->
-                    <p class="valor-produto">R$<?php echo $PRODUTO[
-                        "VALOR"
-                    ]; ?></p>
+                    <p class="valor-produto">R$<?php echo number_format($PRODUTO["VALOR"], 2, ",", "."); ?></p>
                 </div>
 
                 <!-- Formulário para adicionar o produto ao carrinho -->
