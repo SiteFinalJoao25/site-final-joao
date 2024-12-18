@@ -6,6 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/result.css">
     <title>Resultado da pesquisa</title>
 </head>
 <body>
@@ -16,7 +17,7 @@
             $pesquisa = $_POST['strBusca'];
         }
     ?>
-    <main style="padding-top: 100px;" >
+    <main>
         <h1>Resultados para: <?php echo $pesquisa?></h1>
         <?php 
 
@@ -29,15 +30,14 @@
                 $prodImg = $result['PROD_IMAGE'];
                 $prodName = $result['PROD_NAME'];
                 $prodValor = $result['VALOR'];
-            ?>
-
-                <div class="cardResult">
-                    <img src="../imagens/img_produtos/<?php echo $prodImg ?>.jpg" alt="" width="200px">
-                    <p><?php echo $prodName ?></p>
-                    <p><?php echo $prodValor ?></p>
-                </div>
-
-            <?php 
+                $prodId = $result['ID_PROD'];
+        ?>
+            <a href="visualizar.php?id=<?php echo $prodId?>" class="cardResult">
+                <img src="../imagens/img_produtos/<?php echo $prodImg ?>.jpg" alt="">
+                <p><?php echo $prodName ?></p>
+                <p><?php echo $prodValor ?></p>
+            </a>
+        <?php 
                 }
             } else {
                 echo "Nenhum produto encontrado";
