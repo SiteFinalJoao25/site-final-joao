@@ -187,7 +187,13 @@
                     if (mysqli_affected_rows($conexao) > 0) {
                         header("Location: ../html/carrinho.php");
                     } else {
-                        echo "erro ao atualizar";
+                        if (mysqli_error($conexao)) {
+                            echo "Erro ao alterar: " . mysqli_error($conexao);
+                        } else {
+                            echo "Você não alterou a quantidade <br>";
+                            echo "<a href='../html/carrinho.php'>Voltar</a>";
+                            exit();
+                        }
                     }
                 }
             }
