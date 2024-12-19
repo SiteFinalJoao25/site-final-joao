@@ -30,7 +30,7 @@ if (!isset($_SESSION["login"]) && !isset($_SESSION["senha"])) {
     $query = mysqli_query($conexao, $sql);
     $arrayProduto = mysqli_fetch_array($query);
     ?>
-    <form action="acoes.php" method="POST">
+    <form action="acoes.php" method="POST" enctype="multipart/form-data">
         <!-- nome do produto -->
         <label for="nome">Nome</label>
         <input type="text" name="nomeprod" id="nome" value="<?php echo $arrayProduto["PROD_NAME"]; ?>">
@@ -45,7 +45,7 @@ if (!isset($_SESSION["login"]) && !isset($_SESSION["senha"])) {
         <br>
         <!-- imagem do produto -->
         <label for="imagem">Imagem</label>
-        <input type="file" name="imagem" id="imagem" value="<?php echo $arrayProduto["PROD_IMAGE"]; ?>" class="file">
+        <input type="file" name="imagem" id="imagem" accept="image/*">
         <input type="hidden" name="imagem_atual" value="<?php echo $arrayProduto["PROD_IMAGE"]; ?>">
         <br>
         <label for="categoria">Cód. Categoria</label>

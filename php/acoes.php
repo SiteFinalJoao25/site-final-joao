@@ -122,18 +122,26 @@
             $nomeproduto = $_POST["nomeprod"];
             $descproduto = $_POST["descprod"];
             $valorprod = $_POST["valor"];
-            $imagemprod = $_POST["imagem"];
             $categProd = $_POST["categoria"];
 
-            //Inserindo as informações no banco de dados
-            $sql = "INSERT INTO PRODUTO (PROD_NAME, PROD_DESC, VALOR, PROD_IMAGE, FK_ID_CATEGORIA) VALUES ('$nomeproduto', '$descproduto', $valorprod, '$imagemprod', $categProd)";
-            mysqli_query($conexao, $sql);
+            // Processando o upload da imagem
+            $imagemprod = $_FILES["imagem"]["name"];
+            $imagemTemp = $_FILES["imagem"]["tmp_name"];
+            $imagemDestino = "../imagens/img_produtos/" . basename($imagemprod);
 
-            if (mysqli_affected_rows($conexao) > 0) {
-                echo "Produto adicionado com sucesso";
-                header("Location: ../html/produtos.php");
+            if (move_uploaded_file($imagemTemp, $imagemDestino)) {
+                // Inserindo as informações no banco de dados
+                $sql = "INSERT INTO PRODUTO (PROD_NAME, PROD_DESC, VALOR, PROD_IMAGE, FK_ID_CATEGORIA) VALUES ('$nomeproduto', '$descproduto', $valorprod, '$imagemprod', $categProd)";
+                mysqli_query($conexao, $sql);
+
+                if (mysqli_affected_rows($conexao) > 0) {
+                    echo "Produto adicionado com sucesso";
+                    header("Location: ../html/produtos.php");
+                } else {
+                    echo "Erro ao adicionar o produto";
+                }
             } else {
-                echo "Erro ao adicionar o produto";
+                echo "Erro ao fazer upload da imagem";
             }
         }
 

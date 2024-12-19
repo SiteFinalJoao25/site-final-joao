@@ -24,7 +24,7 @@ if (!isset($_SESSION["login"]) && !isset($_SESSION["senha"])) {
 
 <body>
     <h1>Cadastrar produto</h1>
-    <form action="acoes.php" method="POST">
+    <form action="acoes.php" method="POST" enctype="multipart/form-data">
         <!-- nome do produto -->
         <label for="nome">Nome</label>
         <input type="text" name="nomeprod" id="nome">
@@ -39,7 +39,7 @@ if (!isset($_SESSION["login"]) && !isset($_SESSION["senha"])) {
         <br>
         <!-- imagem do produto -->
         <label for="imagem">Imagem</label>
-        <input type="file" name="imagem" id="imagem">
+        <input type="file" name="imagem" id="imagem" accept="image/*">
         <br>
         <!-- categoria -->
         <label for="categoria">Cód. Categoria</label>
