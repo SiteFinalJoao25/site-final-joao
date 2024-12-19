@@ -112,7 +112,7 @@ if (isset($_POST["alterar_produto"])) {
     $sql = "UPDATE PRODUTO SET PROD_NAME = '$nomeProd', PROD_DESC = '$descprod', VALOR = $valorprod, PROD_IMAGE = '$imagemprod', FK_ID_CATEGORIA = $categProd WHERE ID_PROD = $idprod";
     mysqli_query($conexao, $sql);
     if (mysqli_affected_rows($conexao) > 0) {
-        // header("Location: ../html/produtos.php");
+        header("Location: ../html/produtos.php");
     } else {
         if (mysqli_error($conexao)) {
             echo "Erro ao alterar: " . mysqli_error($conexao);
