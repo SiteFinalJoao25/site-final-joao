@@ -60,7 +60,7 @@ require "../php/conexao.php"; ?>
                             "ID_PROD"
                         ]; ?>">Adicionar ao carrinho</button>
                     <!-- Campo para selecionar a quantidade -->
-                    <input type="number" class="quantidade" value="1" name="quant" max="200">
+                    <input type="number" class="quantidade" value="1" name="quant" max="200" min="0">
                 </form>
             </div>
 

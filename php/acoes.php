@@ -18,6 +18,11 @@ if (isset($_POST["add_cart"])) {
         $nome = $produto["PROD_NAME"];
         $quant = $_POST["quant"];
         $valor = $produto["VALOR"];
+        if ($quant < 1) {
+            echo "Quantidade inválida <br>";
+            echo "<a href='../html/produtos.php'>Voltar</a>";
+
+        } else {
 
         if (isset($_SESSION["login"]) && isset($_SESSION["senha"])) {
             //SELECIONANDO O ID DO USUÁRIO
@@ -53,6 +58,7 @@ if (isset($_POST["add_cart"])) {
             header("Location: ../html/naologado.php");
         }
     }
+    }
 }
 
 if (isset($_GET["delete_cart_item"])) {
@@ -82,7 +88,7 @@ if (isset($_POST["cadastrar_produto"])) {
 
     if (mysqli_affected_rows($conexao) > 0) {
         echo "Produto adicionado com sucesso";
-        header("Location: cadastrar_prod.php");
+        header("Location: ../html/produtos.php");
     } else {
         echo "Erro ao adicionar o produto";
     }
@@ -90,19 +96,31 @@ if (isset($_POST["cadastrar_produto"])) {
 
 
 if (isset($_POST["alterar_produto"])) {
+
+    if($_POST['imagem'] == "") {
+        $imagemprod = $_POST['imagem_atual'];
+    } else {
+        $imagemprod = $_POST['imagem'];
+    }
+
     $nomeProd = $_POST['nomeprod'];
     $descprod = $_POST['descprod'];
     $valorprod = $_POST['valor'];
-    $imagemprod = $_POST['imagem'];
     $categProd = $_POST['categoria'];
     $idprod = $_POST['id'];
 
     $sql = "UPDATE PRODUTO SET PROD_NAME = '$nomeProd', PROD_DESC = '$descprod', VALOR = $valorprod, PROD_IMAGE = '$imagemprod', FK_ID_CATEGORIA = $categProd WHERE ID_PROD = $idprod";
     mysqli_query($conexao, $sql);
     if (mysqli_affected_rows($conexao) > 0) {
-        header("Location: ../html/produtos.php");
+        // header("Location: ../html/produtos.php");
     } else {
-        echo "Erro ao alterar: " . mysqli_error($conexao);
+        if (mysqli_error($conexao)) {
+            echo "Erro ao alterar: " . mysqli_error($conexao);
+        } else {
+            echo "Você não alterou nenhum campo <br>";
+            echo "<a href='../html/produtos.php'>Voltar</a>";
+            exit();
+        }
     }
 }
 
