@@ -148,7 +148,7 @@
 
         if (isset($_POST["alterar_produto"])) {
 
-            if($_POST['imagem'] == "") {
+            if(isset($_POST['imagem']) == "") {
                 $imagemprod = $_POST['imagem_atual'];
             } else {
                 $imagemprod = $_POST['imagem'];
