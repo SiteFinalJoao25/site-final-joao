@@ -1,7 +1,5 @@
 <?php
-require "../php/conexao.php";
-session_start();
-?>
+require "../php/conexao.php"; ?>
 
 <!DOCTYPE html>
 <html lang="pt-br">

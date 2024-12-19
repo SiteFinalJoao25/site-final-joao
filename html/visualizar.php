@@ -1,7 +1,6 @@
 <?php
-require "../php/conexao.php";
-session_start();
-?>
+// Inclui o arquivo de conexão com o banco de dados
+require "../php/conexao.php"; ?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -12,7 +11,7 @@ session_start();
 
     <!-- Link para o arquivo CSS -->
     <link rel="stylesheet" href="../css/visualizar.css">
-    <title>Visualizar Produto</title>
+    <title>Ver produto</title>
 </head>
 
 <body>
@@ -23,46 +22,57 @@ session_start();
     <main>
         <?php // Verifica se um ID foi enviado via GET
         if (isset($_GET["id"])) {
-            $idProd = $_GET["id"];
-            $sql = "SELECT * FROM PRODUTO WHERE ID_PROD = $idProd";
+            // Evita injeções SQL usando `mysqli_real_escape_string`
+            $produto_id = mysqli_real_escape_string($conexao, $_GET["id"]);
+            // Consulta SQL para buscar o produto pelo ID
+            $sql = "SELECT * FROM PRODUTO WHERE ID_PROD = $produto_id";
             $query = mysqli_query($conexao, $sql);
 
             // Verifica se há resultados
             if (mysqli_num_rows($query) > 0) {
                 // Obtém os dados do produto como um array
-                $produto = mysqli_fetch_assoc($query);
-                $img = $produto['PROD_IMAGE'];
-                $imgProduto = "../imagens/img_produtos/$img";
-                $nomeProd = $produto['PROD_NAME'];
-                $valorProd = $produto['VALOR'];
-                $descProd = $produto['DESCRICAO'];
-        ?>
+                $PRODUTO = mysqli_fetch_array($query); ?>
         <!-- Se o produto foi encontrado, exibe seus detalhes -->
-        <div class="produto-container">
+        <div class="container-visualizar">
             <!-- Imagem do produto -->
-            <img src="<?php echo $imgProduto ?>" alt="Imagem produto">
-            <div class="produto-info">
-                <h1><?php echo $nomeProd ?></h1>
-                <p>R$<?php echo number_format($valorProd, 2, ",", ".") ?></p>
-                <p><?php echo $descProd ?></p>
+            <img src="../imagens/img_produtos/<?php echo $PRODUTO[
+                "PROD_IMAGE"
+            ]; ?>" alt="Imagem do produto" class="img-visualizar">
+            <div class="textos-visualizar">
+                <div class="textos-top">
+                    <!-- Nome do produto -->
+                    <h3 class="nome-produto"><?php echo $PRODUTO[
+                        "PROD_NAME"
+                    ]; ?></h3>
+                    <!-- Descrição do produto -->
+                    <p class="descricao-produto"><?php echo $PRODUTO[
+                        "PROD_DESC"
+                    ]; ?></p>
+                    <!-- Preço do produto -->
+                    <p class="valor-produto">R$<?php echo number_format($PRODUTO["VALOR"], 2, ",", "."); ?></p>
+                </div>
+
                 <!-- Formulário para adicionar o produto ao carrinho -->
-                <form action="../php/acoes.php" method="POST">
-                    <input type="hidden" name="idProd" value="<?php echo $idProd ?>">
-                    <label for="quantidade">Quantidade:</label>
-                    <input type="number" name="quantidade" id="quantidade" value="1" min="1">
-                    <button type="submit" name="adicionarCarrinho">Adicionar ao Carrinho</button>
+                <form action="../php/acoes.php" method="post">
+                    <!-- Botão para adicionar ao carrinho -->
+                    <button type="submit" class="botao-adicionar" name="add_cart"
+                        value="<?php echo $PRODUTO[
+                            "ID_PROD"
+                        ]; ?>">Adicionar ao carrinho</button>
+                    <!-- Campo para selecionar a quantidade -->
+                    <input type="number" class="quantidade" value="1" name="quant" max="200" min="0">
                 </form>
             </div>
-        </div>
-        <?php
+
+            <?php
             } else {
                 // Mensagem de erro caso o produto não seja encontrado
-                echo "<p>Produto não encontrado</p>";
+                echo "Produto não encontrado";
             }
-        } else {
-            echo "<p>ID do produto não fornecido</p>";
-        }
-        ?>
+        } ?>
+        </div>
+        <!-- Botão para voltar à página de produtos -->
+        <a href="produtos.php" class="voltar">Voltar</a>
     </main>
 
 </body>
