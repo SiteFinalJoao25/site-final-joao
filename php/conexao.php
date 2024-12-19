@@ -5,12 +5,20 @@
     <meta charset="UTF-8">
 </head>
 <?php
-$servidor = "localhost";
-$usuario = "root";
-$senha = "";
-$dbname = "loja";
-$conexao = mysqli_connect($servidor, $usuario, $senha, $dbname);
-if (!$conexao) {
-    die("Falha na conexão: " . mysqli_connect_error());
+$servername = "mysql.escola25dejulho.com.br";
+$username = "escola25dejulh68";
+$password = "turma421";
+$bd = "escola25dejulh68";
+
+//a classe query executa o SQL
+
+//criando conexão
+$conexao = new mysqli($servername, $username, $password, $bd);
+
+//checando conexão
+if ($conexao->connect_error) {
+    die("Falha na Conexão" . $conexao->connect_error);
 }
+//echo "Conexão Efetuada com sucesso.<p>";
+
 ?>
