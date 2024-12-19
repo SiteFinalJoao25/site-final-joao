@@ -212,6 +212,9 @@
 
             $idProduto = $_POST["id"];
 
+            $sql = "DELETE FROM CARRINHO WHERE FK_ID_PROD = $idProduto";
+            mysqli_query($conexao, $sql);
+
             //Inserindo as informações no banco de dados
             $sql = "DELETE FROM PRODUTO WHERE ID_PROD = $idProduto";
             mysqli_query($conexao, $sql);

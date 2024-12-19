@@ -1,3 +1,7 @@
+<?php
+require "../php/conexao.php";
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -12,6 +16,32 @@
 <body>
     <?php include "header.php"; ?>
     <main>
+        <section class="banner">
+            <h1>Bem-vindo à nossa loja</h1>
+            <p>Encontre os melhores produtos aqui</p>
+        </section>
+        <section class="produtos">
+            <h2>Produtos em Destaque</h2>
+            <div class="produtos-container">
+                <?php
+                $sql = "SELECT * FROM PRODUTO LIMIT 4";
+                $query = mysqli_query($conexao, $sql);
+                while ($produto = mysqli_fetch_assoc($query)) {
+                    $img = $produto['PROD_IMAGE'];
+                    $imgProduto = "../imagens/img_produtos/$img";
+                    $nomeProd = $produto['PROD_NAME'];
+                    $valorProd = $produto['VALOR'];
+                    $idProd = $produto['ID_PROD'];
+                ?>
+                <div class="produto">
+                    <img src="<?php echo $imgProduto ?>" alt="Imagem produto">
+                    <h3><?php echo $nomeProd ?></h3>
+                    <p>R$<?php echo number_format($valorProd, 2, ",", ".") ?></p>
+                    <a href="visualizar.php?id=<?php echo $idProd ?>" class="btn">Ver mais</a>
+                </div>
+                <?php } ?>
+            </div>
+        </section>
         <div class="container_cards">
             <div class="card">
                 <p class="titulo_card">ÓCULOS</p>

@@ -1,73 +1,67 @@
 <?php
-require "conexao.php";
+require "../php/conexao.php";
 session_start();
-if (!isset($_SESSION["login"]) && !isset($_SESSION["senha"])) {
-    header("Location: ../html/naologado.php");
-    if (
-        $_SESSION["login"] != "teste@teste.com" ||
-        $_SESSION["senha"] != "admin"
-    ) {
-        header("Location: ../html/naologado.php");
+if (!isset($_SESSION["login"]) || $_SESSION["login"] != "admin") {
+    header("Location: naologado.php");
+}
+if (isset($_POST["alterar"])) {
+    $idProd = $_POST["idProd"];
+    $nomeProd = $_POST["nomeProd"];
+    $valorProd = $_POST["valorProd"];
+    $descProd = $_POST["descProd"];
+    $sql = "UPDATE PRODUTO SET PROD_NAME = '$nomeProd', VALOR = '$valorProd', DESCRICAO = '$descProd' WHERE ID_PROD = $idProd";
+    if (mysqli_query($conexao, $sql)) {
+        header("Location: produtos.php");
+    } else {
+        $erro = "Erro ao alterar produto";
     }
 }
 ?>
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/cad_alt_del.css">
-    <title>Alterar Produtos</title>
+    <link rel="stylesheet" href="../css/alterar-produto.css">
+    <title>Alterar Produto</title>
 </head>
 
 <body>
-    <h1>Alterar produto</h1>
-    <?php
-    $idProd = $_GET["id"];
-    $sql = "SELECT * FROM PRODUTO WHERE ID_PROD = $idProd";
-    $query = mysqli_query($conexao, $sql);
-    $arrayProduto = mysqli_fetch_array($query);
-    ?>
-    <form action="acoes.php" method="POST" enctype="multipart/form-data">
-        <!-- nome do produto -->
-        <label for="nome">Nome</label>
-        <input type="text" name="nomeprod" id="nome" value="<?php echo $arrayProduto["PROD_NAME"]; ?>">
-        <br>
-        <!-- descrição do produto -->
-        <label for="descr">Descrição</label>
-        <input type="text" name="descprod" id="descr" value="<?php echo $arrayProduto["PROD_DESC"]; ?>">
-        <br>
-        <!-- valor -->
-        <label for="valor">Valor R$</label>
-        <input type="number" name="valor" id="valor" step=".01" value="<?php echo $arrayProduto["VALOR"]; ?>">
-        <br>
-        <!-- imagem do produto -->
-        <label for="imagem">Imagem</label>
-        <input type="file" name="imagem" id="imagem" accept="image/*">
-        <input type="hidden" name="imagem_atual" value="<?php echo $arrayProduto["PROD_IMAGE"]; ?>">
-        <br>
-        <label for="categoria">Cód. Categoria</label>
-        <input type="number" name="categoria" id="categoria" value="<?php echo $arrayProduto["FK_ID_CATEGORIA"]; ?>">
-        <br>
-        <input type="hidden" name="id" id="id" value="<?php echo $_GET["id"]; ?>">
-        <input type="submit" value="Alterar" name="alterar_produto">
-        <a href="../html/produtos.php" class="voltar">Voltar</a>
-    </form>
-
-    <h3>Guia de categorias</h3>
-    <ul>
-        <?php 
-            $sql = "SELECT * FROM CATEGORIA";
+    <?php include "header.php"; ?>
+    <main>
+        <h1>Alterar Produto</h1>
+        <?php
+        if (isset($_GET["id"])) {
+            $idProd = $_GET["id"];
+            $sql = "SELECT * FROM PRODUTO WHERE ID_PROD = $idProd";
             $query = mysqli_query($conexao, $sql);
-            while ($categoria = mysqli_fetch_assoc($query)) {
+            if (mysqli_num_rows($query) > 0) {
+                $produto = mysqli_fetch_assoc($query);
+                $nomeProd = $produto['PROD_NAME'];
+                $valorProd = $produto['VALOR'];
+                $descProd = $produto['DESCRICAO'];
         ?>
-        <li>Categoria <?php echo $categoria['DESC_CAT']?>: #<?php echo $categoria['ID_CATEGORIA']?></li>
-        <?php 
+        <form action="alterar-produto.php" method="POST">
+            <input type="hidden" name="idProd" value="<?php echo $idProd ?>">
+            <label for="nomeProd">Nome do Produto:</label>
+            <input type="text" name="nomeProd" id="nomeProd" value="<?php echo $nomeProd ?>" required>
+            <label for="valorProd">Valor do Produto:</label>
+            <input type="text" name="valorProd" id="valorProd" value="<?php echo $valorProd ?>" required>
+            <label for="descProd">Descrição do Produto:</label>
+            <textarea name="descProd" id="descProd" required><?php echo $descProd ?></textarea>
+            <button type="submit" name="alterar">Alterar</button>
+            <?php if (isset($erro)) { echo "<p>$erro</p>"; } ?>
+        </form>
+        <?php
+            } else {
+                echo "<p>Produto não encontrado</p>";
             }
+        } else {
+            echo "<p>ID do produto não fornecido</p>";
+        }
         ?>
-    </ul>
+    </main>
 </body>
 
 </html>

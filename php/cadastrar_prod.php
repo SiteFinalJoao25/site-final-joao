@@ -1,66 +1,60 @@
 <?php
 require "conexao.php";
 session_start();
-if (!isset($_SESSION["login"]) && !isset($_SESSION["senha"])) {
+if (!isset($_SESSION["login"]) || $_SESSION["login"] != "admin") {
     header("Location: ../html/naologado.php");
-    if (
-        $_SESSION["login"] != "teste@teste.com" ||
-        $_SESSION["senha"] != "admin"
-    ) {
-        header("Location: ../html/naologado.php");
+}
+if (isset($_POST["cadastrar"])) {
+    $nomeProd = $_POST["nomeProd"];
+    $valorProd = $_POST["valorProd"];
+    $descProd = $_POST["descProd"];
+    $categoria = $_POST["categoria"];
+    $imagem = $_FILES["imagem"]["name"];
+    $target_dir = "../imagens/img_produtos/";
+    $target_file = $target_dir . basename($imagem);
+    move_uploaded_file($_FILES["imagem"]["tmp_name"], $target_file);
+    $sql = "INSERT INTO PRODUTO (PROD_NAME, VALOR, DESCRICAO, CATEGORIA, PROD_IMAGE) VALUES ('$nomeProd', '$valorProd', '$descProd', '$categoria', '$imagem')";
+    if (mysqli_query($conexao, $sql)) {
+        header("Location: ../html/produtos.php");
+    } else {
+        $erro = "Erro ao cadastrar produto";
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/cad_alt_del.css">
-    <title>Cadastrar Produtos</title>
+    <link rel="stylesheet" href="../css/cadastrar_prod.css">
+    <title>Cadastrar Produto</title>
 </head>
 
 <body>
-    <h1>Cadastrar produto</h1>
-    <form action="acoes.php" method="POST" enctype="multipart/form-data">
-        <!-- nome do produto -->
-        <label for="nome">Nome</label>
-        <input type="text" name="nomeprod" id="nome">
-        <br>
-        <!-- descrição do produto -->
-        <label for="descr">Descrição</label>
-        <input type="text" name="descprod" id="descr">
-        <br>
-        <!-- valor -->
-        <label for="valor">Valor R$</label>
-        <input type="number" name="valor" id="valor" step=".01">
-        <br>
-        <!-- imagem do produto -->
-        <label for="imagem">Imagem</label>
-        <input type="file" name="imagem" id="imagem" accept="image/*">
-        <br>
-        <!-- categoria -->
-        <label for="categoria">Cód. Categoria</label>
-        <input type="number" name="categoria" id="categoria">
-        <br>
-        <input type="submit" value="Cadastrar" name="cadastrar_produto">
-        <a href="../html/produtos.php" class="voltar">Voltar</a>
-    </form>
-
-    <h3>Guia de categorias</h3>
-    <ul>
-        <?php 
-            $sql = "SELECT * FROM CATEGORIA";
-            $query = mysqli_query($conexao, $sql);
-            while ($categoria = mysqli_fetch_assoc($query)) {
-        ?>
-        <li>Categoria <?php echo $categoria['DESC_CAT']?>: #<?php echo $categoria['ID_CATEGORIA']?></li>
-        <?php 
-            }
-        ?>
-    </ul>
+    <?php include "../html/header.php"; ?>
+    <main>
+        <h1>Cadastrar Produto</h1>
+        <form action="cadastrar_prod.php" method="POST" enctype="multipart/form-data">
+            <label for="nomeProd">Nome do Produto:</label>
+            <input type="text" name="nomeProd" id="nomeProd" required>
+            <label for="valorProd">Valor do Produto:</label>
+            <input type="text" name="valorProd" id="valorProd" required>
+            <label for="descProd">Descrição do Produto:</label>
+            <textarea name="descProd" id="descProd" required></textarea>
+            <label for="categoria">Categoria:</label>
+            <select name="categoria" id="categoria" required>
+                <option value="1">ÓCULOS</option>
+                <option value="2">RELÓGIOS</option>
+                <option value="3">PERFUMES</option>
+                <option value="4">COLARES</option>
+            </select>
+            <label for="imagem">Imagem do Produto:</label>
+            <input type="file" name="imagem" id="imagem" required>
+            <button type="submit" name="cadastrar">Cadastrar</button>
+            <?php if (isset($erro)) { echo "<p>$erro</p>"; } ?>
+        </form>
+    </main>
 </body>
 
 </html>
