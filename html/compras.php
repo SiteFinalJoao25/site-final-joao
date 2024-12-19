@@ -68,7 +68,7 @@ require "../php/conexao.php"; ?>
                                 // Itera sobre cada item encontrado
                                 while ($item = mysqli_fetch_assoc($itens)) {
                                     $img = $item['PROD_IMAGE']; 
-                                    $imgProduto = "../imagens/img_produtos/$img.jpg";
+                                    $imgProduto = "../imagens/img_produtos/$img";
                                     $nomeProd = $item['PROD_NAME'];
                                     $valorProd = $item['FK_VALOR'];
                                     $quantProd = $item['FK_QUANT'];
